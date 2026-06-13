@@ -20,7 +20,7 @@ from __future__ import annotations
 
 import calendar
 from dataclasses import dataclass, field
-from datetime import date, timedelta
+from datetime import date, datetime, time, timedelta
 from decimal import Decimal
 from enum import StrEnum
 from typing import Any
@@ -495,4 +495,73 @@ def estimate_annual(tariff: Tariff, hourly_kwh_8760, year: int) -> AnnualResult:
         fixed_charge=fixed_total,
         windows=tuple(windows),
         warnings=tuple(dict.fromkeys(all_warnings)),
+    )
+
+
+# --------------------------------------------------------------------------------------
+# Charge-window optimization (the "when should I charge?" half of the thesis)
+# --------------------------------------------------------------------------------------
+@dataclass(frozen=True)
+class ChargeWindow:
+    start: datetime
+    hours: int
+    avg_rate: Decimal  # average marginal $/kWh over the block
+    hourly_rates: tuple[Decimal, ...]
+
+    def to_json(self) -> dict[str, Any]:
+        return {
+            "start": self.start.isoformat(),
+            "hours": self.hours,
+            "avg_rate": decimal_to_json(self.avg_rate),
+            "hourly_rates": [decimal_to_json(r) for r in self.hourly_rates],
+        }
+
+
+def period_at(tariff: Tariff, day: date, hour: int) -> int:
+    """Public: the energy period index a tariff assigns to ``(day, hour)``."""
+    return _period_at(tariff, day, hour)
+
+
+def hourly_marginal_prices(
+    tariff: Tariff, window: BillingWindow, *, tier: int = 0
+) -> tuple[Decimal, ...]:
+    """Per-hour marginal energy price ($/kWh) over the window — the TOU price signal.
+
+    Returns the effective rate of the period each hour maps to, at the given tier index
+    (clamped to the period's tier count). v0 uses an energy-only marginal price; demand charges
+    and tier position relative to the customer's baseline usage are not modeled, so this is the
+    time-of-use signal for *when* to charge, not an exact incremental cost.
+    """
+    prices: list[Decimal] = []
+    for day in window.iter_days():
+        for hour in range(24):
+            tiers = tariff.energy.periods[_period_at(tariff, day, hour)].tiers
+            prices.append(tiers[min(tier, len(tiers) - 1)].effective_rate)
+    return tuple(prices)
+
+
+def cheapest_charge_window(
+    tariff: Tariff, window: BillingWindow, charge_hours: int, *, tier: int = 0
+) -> ChargeWindow:
+    """Find the cheapest contiguous ``charge_hours``-long block in the window to add load.
+
+    Minimizing the block's average marginal price minimizes the cost of charging a fixed amount
+    of energy spread uniformly over the block. Ties resolve to the earliest start.
+    """
+    prices = hourly_marginal_prices(tariff, window, tier=tier)
+    if charge_hours <= 0 or charge_hours > len(prices):
+        raise ValueError(
+            f"charge_hours {charge_hours} out of range for a {len(prices)}-hour window"
+        )
+    best_start, best_sum = 0, None
+    for i in range(len(prices) - charge_hours + 1):
+        block_sum = sum(prices[i : i + charge_hours], ZERO)
+        if best_sum is None or block_sum < best_sum:
+            best_sum, best_start = block_sum, i
+    start_dt = datetime.combine(window.start, time()) + timedelta(hours=best_start)
+    return ChargeWindow(
+        start=start_dt,
+        hours=charge_hours,
+        avg_rate=best_sum / Decimal(charge_hours),
+        hourly_rates=prices[best_start : best_start + charge_hours],
     )

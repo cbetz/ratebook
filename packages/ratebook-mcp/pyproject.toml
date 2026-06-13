@@ -7,10 +7,16 @@ license = "Apache-2.0"
 requires-python = ">=3.12"
 dependencies = [
     "ratebook",
+    "ratebook-data",
+    "mcp>=1.2",
 ]
+
+[project.scripts]
+ratebook-mcp = "ratebook_mcp.server:main"
 
 [tool.uv.sources]
 ratebook = { workspace = true }
+ratebook-data = { workspace = true }
 
 [build-system]
 requires = ["hatchling"]

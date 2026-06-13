@@ -38,3 +38,46 @@ def tariff_from_row(row: dict[str, Any]) -> Tariff:
 
 def load_tariff(label: str, db_path: Path = DEFAULT_DB) -> Tariff:
     return tariff_from_row(fetch_row(label, db_path))
+
+
+def search_tariffs(
+    query: str,
+    *,
+    db_path: Path = DEFAULT_DB,
+    sector: str | None = "Residential",
+    active_only: bool = True,
+    limit: int = 10,
+) -> list[dict[str, Any]]:
+    """Search ``raw.urdb`` for tariffs matching ``query`` (utility name, eiaid, or exact label).
+
+    Returns lightweight metadata rows (no full structure) for typeahead/lookup, freshest first.
+    """
+    clauses = ["(utility ILIKE ? OR eiaid = ? OR label = ?)"]
+    params: list[Any] = [f"%{query}%", query, query]
+    if sector:
+        clauses.append("sector = ?")
+        params.append(sector)
+    if active_only:
+        clauses.append("(enddate IS NULL OR enddate = '')")
+    where = " AND ".join(clauses)
+    cols = (
+        "label",
+        "eiaid",
+        "utility",
+        "name",
+        "sector",
+        "startdate",
+        "enddate",
+        "latest_update",
+        "source",
+    )
+    con = duckdb.connect(str(db_path), read_only=True)
+    try:
+        rows = con.execute(
+            f"SELECT {', '.join(cols)} FROM raw.urdb WHERE {where} "
+            f"ORDER BY TRY_CAST(latest_update AS TIMESTAMP) DESC NULLS LAST LIMIT ?",
+            [*params, limit],
+        ).fetchall()
+    finally:
+        con.close()
+    return [dict(zip(cols, r, strict=True)) for r in rows]
