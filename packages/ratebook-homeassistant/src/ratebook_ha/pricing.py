@@ -62,3 +62,37 @@ def cheapest_window(tariff: Tariff, start: date, *, days: int, charge_hours: int
         "avg_rate": float(cw.avg_rate),
         "hours": charge_hours,
     }
+
+
+def _hourly_rate(tariff: Tariff, ts: datetime, _cache: dict[date, Any]) -> float:
+    day = ts.date()
+    if day not in _cache:
+        _cache[day] = hourly_marginal_prices(tariff, BillingWindow(day, 1))
+    return float(_cache[day][ts.hour])
+
+
+def evcc_forecast(tariff: Tariff, start: datetime, hours: int) -> list[dict[str, Any]]:
+    """Hourly price forecast in evcc's custom-tariff shape: ``[{start, end, value}, ...]``.
+
+    Timestamps are RFC3339 (``start.isoformat()`` — pass a timezone-aware ``start``); ``value``
+    is the marginal $/kWh for that hour. Feed this to an evcc ``custom`` grid tariff via its
+    ``http`` source (e.g. through the Home Assistant sensor's ``forecast`` attribute).
+    """
+    cache: dict[date, Any] = {}
+    out: list[dict[str, Any]] = []
+    for i in range(hours):
+        ts = start + timedelta(hours=i)
+        out.append(
+            {
+                "start": ts.isoformat(),
+                "end": (ts + timedelta(hours=1)).isoformat(),
+                "value": _hourly_rate(tariff, ts, cache),
+            }
+        )
+    return out
+
+
+def emhass_cost_forecast(tariff: Tariff, start: datetime, hours: int) -> list[float]:
+    """Hourly marginal prices as an EMHASS ``load_cost_forecast`` list — current period first."""
+    cache: dict[date, Any] = {}
+    return [_hourly_rate(tariff, start + timedelta(hours=i), cache) for i in range(hours)]

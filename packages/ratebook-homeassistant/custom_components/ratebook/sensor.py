@@ -66,6 +66,8 @@ class RatebookPriceSensor(_RatebookEntity):
         return {
             "today": self.coordinator.data["today"],
             "tomorrow": self.coordinator.data["tomorrow"],
+            # evcc-shaped [{start, end, value}] forecast for price-aware chargers.
+            "forecast": self.coordinator.data["forecast"],
             "currency": self.coordinator.currency,
         }
 

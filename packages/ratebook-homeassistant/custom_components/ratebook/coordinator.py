@@ -58,10 +58,14 @@ class RatebookCoordinator(DataUpdateCoordinator[dict[str, Any]]):
         tz = now.tzinfo
         start = dt_util.parse_datetime(window["start"])
         end = dt_util.parse_datetime(window["end"])
+        forecast_start = now.replace(minute=0, second=0, microsecond=0)
         return {
             "current_price": pricing.current_price(self._tariff, now),
             "today": pricing.hourly_schedule(self._tariff, today),
             "tomorrow": pricing.hourly_schedule(self._tariff, tomorrow),
+            # evcc custom-tariff shape ([{start, end, value}]) for direct consumption by evcc's
+            # http source pointed at this sensor via the Home Assistant REST API.
+            "forecast": pricing.evcc_forecast(self._tariff, forecast_start, 48),
             "cheapest_window": {
                 "start": start.replace(tzinfo=tz) if start else None,
                 "end": end.replace(tzinfo=tz) if end else None,

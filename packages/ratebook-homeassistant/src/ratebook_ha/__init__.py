@@ -3,6 +3,8 @@
 from .pricing import (
     cheapest_window,
     current_price,
+    emhass_cost_forecast,
+    evcc_forecast,
     hourly_schedule,
     list_bundled,
     load_bundled,
@@ -15,6 +17,8 @@ __all__ = [
     "__version__",
     "cheapest_window",
     "current_price",
+    "emhass_cost_forecast",
+    "evcc_forecast",
     "hourly_schedule",
     "list_bundled",
     "load_bundled",
