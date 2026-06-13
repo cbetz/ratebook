@@ -1,6 +1,7 @@
 # Workspace root (virtual): the three publishable packages live under packages/.
 [tool.uv.workspace]
 members = ["packages/*"]
+exclude = ["packages/ratebook-ts"]  # TypeScript package — pnpm, not a uv member
 
 [dependency-groups]
 dev = [
