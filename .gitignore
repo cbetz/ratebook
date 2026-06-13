@@ -9,6 +9,7 @@ node_modules/
 dist/
 .DS_Store
 data/raw/
+data/pdfs/
 docs/private/
 *.duckdb
 *.duckdb.wal
