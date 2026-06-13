@@ -1,0 +1,498 @@
+[
+  {
+    "label": "69d92c23ac3477692606714c",
+    "utility": "Pacific Gas & Electric Co",
+    "name": "E-1 -Residential Service Baseline Region",
+    "url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-1.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "E-1 -Residential Service Baseline Region P",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 2,
+      "max_tiers": 3,
+      "fixed_charge": "0.79343",
+      "urdb_energy_rate": "0.32561",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 656128,
+      "content_type": "application/pdf",
+      "sha256": "39fbba73bbe0",
+      "ua": false
+    }
+  },
+  {
+    "label": "69de73e26d1ebb0263094f0c",
+    "utility": "Pacific Gas & Electric Co",
+    "name": "E-TOU-C Residential Time of Use Baseline",
+    "url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-TOU-C.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "E-TOU-C Residential Time of Use Baseline Region Z (All Electric Service)",
+      "tiered": true,
+      "time_of_use": true,
+      "n_periods": 4,
+      "max_tiers": 2,
+      "fixed_charge": "0.79343",
+      "urdb_energy_rate": "0.441",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 932456,
+      "content_type": "application/pdf",
+      "sha256": "053b572d9c86",
+      "ua": false
+    }
+  },
+  {
+    "label": "69e65026bc32447e430e25a9",
+    "utility": "PECO Energy Co",
+    "name": "Residential Service (R)",
+    "url": "https://azure-na-assets.contentstack.com/v3/assets/blt1b5616c79bacadb4/bltef2bb157cc587eac/695440f39dd7d11ce0542224/Pages_52_Rate_R_from_clean_up_pages_for_ICUS_FARS_Supp_no._21_eff_Jan_1_2026.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Residential Service (R)",
+      "tiered": false,
+      "time_of_use": false,
+      "n_periods": 1,
+      "max_tiers": 1,
+      "fixed_charge": "11.3",
+      "urdb_energy_rate": "0.21884",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 114017,
+      "content_type": "application/pdf",
+      "sha256": "cd1a472e885a",
+      "ua": false
+    }
+  },
+  {
+    "label": "69e65a18805b2131910774d9",
+    "utility": "PECO Energy Co",
+    "name": "Residential Service (R) - TOU",
+    "url": "https://azure-na-assets.contentstack.com/v3/assets/blt1b5616c79bacadb4/bltef2bb157cc587eac/695440f39dd7d11ce0542224/Pages_52_Rate_R_from_clean_up_pages_for_ICUS_FARS_Supp_no._21_eff_Jan_1_2026.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Residential Service (R) - TOU",
+      "tiered": false,
+      "time_of_use": true,
+      "n_periods": 3,
+      "max_tiers": 1,
+      "fixed_charge": "11.3",
+      "urdb_energy_rate": "0.19242",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 114017,
+      "content_type": "application/pdf",
+      "sha256": "cd1a472e885a",
+      "ua": false
+    }
+  },
+  {
+    "label": "679c05efaddfd4b96500e1d4",
+    "utility": "Commonwealth Edison Co",
+    "name": "BES - Residential Single Family Without ",
+    "url": "https://www.comed.com/cdn/assets/v3/assets/blt3ebb3fed6084be2a/blt7904befea93c3525/677d766b2e8c81cb661a61e4/A_Guide_to_the_Retail_Customer_s_Billed_Delivery_Service_Charges.pdf?branch=prod_alias",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "BES - Residential Single Family Without Electric Space Heat Delivery Class",
+      "tiered": false,
+      "time_of_use": false,
+      "n_periods": 2,
+      "max_tiers": 1,
+      "fixed_charge": "19.52",
+      "urdb_energy_rate": "0.12928",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 202071,
+      "content_type": "application/pdf",
+      "sha256": "b5d08d1ff45c",
+      "ua": false
+    }
+  },
+  {
+    "label": "69e681d00b9e1bb34f0912d9",
+    "utility": "DTE Electric",
+    "name": "Residential Service Rate - (Full Service",
+    "url": "https://www.michigan.gov/-/media/Project/Websites/mpsc/consumer/rate-books/electric/dte/dtee1cur.pdf?rev=e0168ab41b8245bba5f3ca7631c29614",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Residential Service Rate - (Full Service) - D1",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 1,
+      "max_tiers": 2,
+      "fixed_charge": "9.75",
+      "urdb_energy_rate": "0.215256",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 5221874,
+      "content_type": "application/pdf",
+      "sha256": "60327abf3072",
+      "ua": true
+    }
+  },
+  {
+    "label": "6998c205a746c90e550cb23f",
+    "utility": "Duke Energy Carolinas, LLC",
+    "name": "RS (Residential Service)",
+    "url": "https://www.duke-energy.com/-/media/pdfs/for-your-home/rates/electric-nc/ncschedulers.pdf?la=en&rev=b409b199157a405f98d3dce125323d59",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "RS (Residential Service)",
+      "tiered": false,
+      "time_of_use": false,
+      "n_periods": 1,
+      "max_tiers": 1,
+      "fixed_charge": "14.0",
+      "urdb_energy_rate": "0.127555",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 193814,
+      "content_type": "application/pdf",
+      "sha256": "10532f9514b8",
+      "ua": false
+    }
+  },
+  {
+    "label": "69c1a32d79e080761e08539c",
+    "utility": "Duke Energy Indiana Inc",
+    "name": "RS - Residential Service",
+    "url": "https://www.duke-energy.com/-/media/pdfs/for-your-home/rates/electric-in/iurc-16/tariff-no-06-rate-rs-residential-electric-svc.pdf?rev=48de7abbf11143eb9eb47ea57e028603",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "RS - Residential Service",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 1,
+      "max_tiers": 3,
+      "fixed_charge": "13.7",
+      "urdb_energy_rate": "0.189378",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 240358,
+      "content_type": "application/pdf",
+      "sha256": "8228854f06f9",
+      "ua": false
+    }
+  },
+  {
+    "label": "69deb3d8e547dde41109ee02",
+    "utility": "Alabama Power Co",
+    "name": "Family Dwelling Service",
+    "url": "https://www.alabamapower.com/content/dam/alabama-power/pdfs-docs/Rates/FD.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Family Dwelling Service",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 2,
+      "max_tiers": 2,
+      "fixed_charge": "16.0",
+      "urdb_energy_rate": "0.1447181",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 133621,
+      "content_type": "application/pdf",
+      "sha256": "3fb6abc30881",
+      "ua": false
+    }
+  },
+  {
+    "label": "69a706ab7da20ea6b00d0238",
+    "utility": "Arizona Public Service Co",
+    "name": "Time-of-Use 4pm-7pm Weekdays (R-TOU-E)",
+    "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Service-Plans/Time-of-Use-4pm-7pmWeekdays_R-TOU-E.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Time-of-Use 4pm-7pm Weekdays (R-TOU-E)",
+      "tiered": false,
+      "time_of_use": true,
+      "n_periods": 5,
+      "max_tiers": 1,
+      "fixed_charge": "0.458",
+      "urdb_energy_rate": "0.153281",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 167467,
+      "content_type": "application/pdf",
+      "sha256": "1fb836b4a19d",
+      "ua": false
+    }
+  },
+  {
+    "label": "69a1b8bf40140c3bb007f1bd",
+    "utility": "Salt River Project",
+    "name": "E-23 Tier 1 BASIC PRICE PLAN FOR RESIDEN",
+    "url": "https://www.srpnet.com/assets/srpnet/pdf/price-plans/FY26/TCA%20Ratebooks/2025%20Ratebook%20E-23%20with%20TCA.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "E-23 Tier 1 BASIC PRICE PLAN FOR RESIDENTIAL SERVICE",
+      "tiered": false,
+      "time_of_use": false,
+      "n_periods": 3,
+      "max_tiers": 1,
+      "fixed_charge": "20.0",
+      "urdb_energy_rate": "0.1204",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 63840,
+      "content_type": "application/pdf",
+      "sha256": "43e9a91cb739",
+      "ua": false
+    }
+  },
+  {
+    "label": "6997c46543b6aa9b2a015f78",
+    "utility": "Virginia Electric & Power Co",
+    "name": "Residential Schedule 1",
+    "url": "https://cdn-dominionenergy-prd-001.azureedge.net/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1.pdf?rev=12859b46b4ad4560b73ee3c95d6ad4b8&hash=3E847900A3D8486E020BAFFA57E05BC9",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Residential Schedule 1",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 2,
+      "max_tiers": 2,
+      "fixed_charge": "7.58",
+      "urdb_energy_rate": "0.163546",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 100391,
+      "content_type": "application/pdf",
+      "sha256": "64602ada0529",
+      "ua": false
+    }
+  },
+  {
+    "label": "69eb933dd52ff0b5930ddce2",
+    "utility": "Los Angeles Department of Wate",
+    "name": "Residential Service (R1A): Zone 1",
+    "url": "https://www.ladwp.com/sites/default/files/documents/LADWP_Electric_Rates.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Residential Service (R1A): Zone 1",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 2,
+      "max_tiers": 3,
+      "fixed_charge": null,
+      "urdb_energy_rate": "0.241736",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 1764393,
+      "content_type": "application/pdf",
+      "sha256": "789d1183a45f",
+      "ua": false
+    }
+  },
+  {
+    "label": "6973ea390a32312ef00ae241",
+    "utility": "Long Island Power Authority",
+    "name": "180/183/186 (Residential Service)",
+    "url": "https://www.lipower.org/wp-content/uploads/2026/01/LIPA-Tariff-January-2026.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "180/183/186 (Residential Service)",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 2,
+      "max_tiers": 2,
+      "fixed_charge": "16.8",
+      "urdb_energy_rate": "0.2687",
+      "importable": true
+    },
+    "fetch": {
+      "ok": false,
+      "status": 403,
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 5912
+    }
+  },
+  {
+    "label": "6969340fd06d027d0c0c65bc",
+    "utility": "Connecticut Light & Power Co",
+    "name": "Rate 1 - Residential Electric Service",
+    "url": "https://www.eversource.com/docs/default-source/rates-tariffs/ct-electric/rate-1-ct.pdf?sfvrsn=399fd56f_20",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Rate 1 - Residential Electric Service",
+      "tiered": false,
+      "time_of_use": false,
+      "n_periods": 1,
+      "max_tiers": 1,
+      "fixed_charge": "9.62",
+      "urdb_energy_rate": "0.29213",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 77297,
+      "content_type": "application/pdf",
+      "sha256": "815498dda95b",
+      "ua": false
+    }
+  },
+  {
+    "label": "68b399e19d10ce4ee705c572",
+    "utility": "Potomac Electric Power Co",
+    "name": "Residential - Schedule R",
+    "url": "https://www.pepco.com/cdn/assets/v3/assets/bltbb7c204688a1a6a8/blt1592c0ff5185f738/6838a59f7476148e7ae7d25a/DC_PCA_SOS_Current_Tariff_Eff_6.1.2025.pdf?branch=prod_alias",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Residential - Schedule R",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 2,
+      "max_tiers": 3,
+      "fixed_charge": "17.09",
+      "urdb_energy_rate": "0.03411",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 1043014,
+      "content_type": "application/pdf",
+      "sha256": "b7f15d349321",
+      "ua": false
+    }
+  },
+  {
+    "label": "69ea606ff253a30c3f0075ee",
+    "utility": "Nevada Power Co",
+    "name": "ORS-TOU Optional Residential Service Tim",
+    "url": "https://www.nvenergy.com/publish/content/dam/nvenergy/bill_inserts/2024/4_apr/np_res_rate_2_30.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "ORS-TOU Optional Residential Service Time of Use",
+      "tiered": false,
+      "time_of_use": true,
+      "n_periods": 3,
+      "max_tiers": 1,
+      "fixed_charge": "18.0",
+      "urdb_energy_rate": "0.09171",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 67666,
+      "content_type": "application/pdf",
+      "sha256": "cc81d47d0b25",
+      "ua": false
+    }
+  },
+  {
+    "label": "685c51a57ab730a74905690c",
+    "utility": "PacifiCorp (Utah)",
+    "name": "Schedule 1 (Residential Service - Single",
+    "url": "https://www.rockymountainpower.net/content/dam/pcorp/documents/en/rockymountainpower/rates-regulation/utah/Utah_Price_Summary.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Schedule 1 (Residential Service - Single Phase, single family)",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 2,
+      "max_tiers": 2,
+      "fixed_charge": "12.16",
+      "urdb_energy_rate": "0.114972",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 134547,
+      "content_type": "application/pdf",
+      "sha256": "40d5255b44e9",
+      "ua": false
+    }
+  },
+  {
+    "label": "6859a625ee417fe3fa0cb0df",
+    "utility": "Wisconsin Electric Power Co",
+    "name": "Residential (Single-Phase) Rg 1",
+    "url": "https://www.we-energies.com/pdfs/etariffs/wisconsin/elecrateswi.pdf#pagemode=bookmarks",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Residential (Single-Phase) Rg 1",
+      "tiered": false,
+      "time_of_use": false,
+      "n_periods": 1,
+      "max_tiers": 1,
+      "fixed_charge": "0.49315",
+      "urdb_energy_rate": "0.19593",
+      "importable": true
+    },
+    "fetch": {
+      "ok": true,
+      "status": 200,
+      "bytes": 2003658,
+      "content_type": "application/pdf",
+      "sha256": "3bdbf48559fb",
+      "ua": false
+    }
+  },
+  {
+    "label": "69dd1b5381bf8b311c0576a8",
+    "utility": "Ohio Power Co",
+    "name": "Residential Service Bundled Ohio Power R",
+    "url": "https://www.aepohio.com/lib/docs/ratesandtariffs/Ohio/AEP_Ohio_Tariff_Book.pdf",
+    "ground_truth": {
+      "sector": "residential",
+      "plan_name": "Residential Service Bundled Ohio Power Rate Zone (RS)",
+      "tiered": true,
+      "time_of_use": false,
+      "n_periods": 1,
+      "max_tiers": 3,
+      "fixed_charge": "18.788",
+      "urdb_energy_rate": "0.1677638",
+      "importable": true
+    },
+    "fetch": {
+      "ok": false,
+      "status": 404,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 176589
+    }
+  }
+]
