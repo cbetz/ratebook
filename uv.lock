@@ -6,6 +6,7 @@ requires-python = ">=3.12"
 members = [
     "ratebook",
     "ratebook-data",
+    "ratebook-ha",
     "ratebook-mcp",
 ]
 
@@ -714,6 +715,17 @@ requires-dist = [
     { name = "ratebook", editable = "packages/ratebook" },
 ]
 provides-extras = ["extract"]
+
+[[package]]
+name = "ratebook-ha"
+version = "0.0.1"
+source = { editable = "packages/ratebook-homeassistant" }
+dependencies = [
+    { name = "ratebook" },
+]
+
+[package.metadata]
+requires-dist = [{ name = "ratebook", editable = "packages/ratebook" }]
 
 [[package]]
 name = "ratebook-mcp"

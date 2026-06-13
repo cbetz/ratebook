@@ -9,7 +9,9 @@ The open rate engine for the electrified home — an openly licensed database of
 Python 3.12+, [uv](https://docs.astral.sh/uv/) workspace with three packages:
 `packages/ratebook` (rate engine), `packages/ratebook-data` (data plant),
 `packages/ratebook-mcp` (MCP server). Plus `packages/ratebook-ts` — the TypeScript engine port
-(pnpm + vitest), held to the Python engine via shared JSON test vectors.
+(pnpm + vitest), held to the Python engine via shared JSON test vectors — and
+`packages/ratebook-homeassistant` — a Home Assistant custom integration (electricity-price +
+cheapest-charge-window sensors) over the engine.
 
 ```sh
 uv sync                    # install all workspace packages + dev tools

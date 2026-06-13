@@ -1,0 +1,17 @@
+[project]
+name = "ratebook-ha"
+version = "0.0.1"
+description = "Home Assistant adapter for the Ratebook rate engine: tariff pricing, price schedule, and cheapest-charge-window helpers."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.12"
+dependencies = [
+    "ratebook",
+]
+
+[tool.uv.sources]
+ratebook = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
