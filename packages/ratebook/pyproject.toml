@@ -1,0 +1,12 @@
+[project]
+name = "ratebook"
+version = "0.0.1"
+description = "Deterministic US electricity tariff rate engine: pure functions, property-tested."
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
