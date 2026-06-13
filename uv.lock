@@ -15,6 +15,7 @@ dev = [
     { name = "pytest", specifier = ">=8.0" },
     { name = "ruff", specifier = ">=0.5" },
 ]
+validation = [{ name = "nrel-pysam", specifier = ">=7.0" }]
 
 [[package]]
 name = "anyio"
@@ -144,6 +145,23 @@ wheels = [
 ]
 
 [[package]]
+name = "nrel-pysam"
+version = "7.1.1.post1"
+source = { registry = "https://pypi.org/simple" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/82/b1/be9fa3d89821b42fe9c8dab35763dbae54d00c99e513f9b020af8ab95bc4/nrel_pysam-7.1.1.post1-cp312-cp312-macosx_12_0_arm64.whl", hash = "sha256:408f228092734c5f038ffa53aa4bf11b8f85b6c92d0dfdccd93da1a0b7d8a28a", size = 35589497, upload-time = "2026-04-27T09:57:11.435Z" },
+    { url = "https://files.pythonhosted.org/packages/78/90/f3cecd95554bdcc26b15c6635ceb5ad57fefc0dcc85fc8b8dfd186dcccfe/nrel_pysam-7.1.1.post1-cp312-cp312-macosx_12_0_x86_64.whl", hash = "sha256:3e97538b33bc6542d47785000aaed7941f1522e08ff81732b2c97df6964d4c2c", size = 35895056, upload-time = "2026-04-27T09:59:28.103Z" },
+    { url = "https://files.pythonhosted.org/packages/66/96/556d776bb8c334f82d39b63567ad0b17ee26cdfd3b684fa961d8eca9a90b/nrel_pysam-7.1.1.post1-cp312-cp312-manylinux2014_aarch64.whl", hash = "sha256:631d9d972c99c8a57a5d469d3cd2cf86992adecc1ef0fe926f3eed928451e943", size = 45198895, upload-time = "2026-04-28T09:54:18.77Z" },
+    { url = "https://files.pythonhosted.org/packages/ee/18/1edb69b383fc331b680957519a2d8f3833e4d96c9e16f2c814c7b64bb34e/nrel_pysam-7.1.1.post1-cp312-cp312-manylinux2014_x86_64.whl", hash = "sha256:27c965f0f8be6afb1d8625250fc4c3973a408b8c368d657eb3cd22f02a1c82e0", size = 47255128, upload-time = "2026-04-28T09:57:00.467Z" },
+    { url = "https://files.pythonhosted.org/packages/f3/30/f3027e379d79c8e12d50ee9af0b2414ae9882de73482de9f4f15964c9410/nrel_pysam-7.1.1.post1-cp312-cp312-win_amd64.whl", hash = "sha256:e135acafd1102fc6c7f1101657d2479f3d6e60dc895e0ef7a8c89df55998feaa", size = 32852128, upload-time = "2026-04-26T08:12:21.828Z" },
+    { url = "https://files.pythonhosted.org/packages/ad/3a/5b74cb446353a61f1ec2fa35bc7b1e496a4b0808b1d75244b58307c15dd5/nrel_pysam-7.1.1.post1-cp313-cp313-macosx_12_0_arm64.whl", hash = "sha256:b7609ed08b17efd6267eca48f72723ae71949d606d7f9dff21ee619db3123b14", size = 35585991, upload-time = "2026-04-27T09:57:58.371Z" },
+    { url = "https://files.pythonhosted.org/packages/19/70/c7280e7aa2faa27c21e3b2e8f1bddf42c8abd5176aa4fbdf595032571f57/nrel_pysam-7.1.1.post1-cp313-cp313-macosx_12_0_x86_64.whl", hash = "sha256:2455d7aa2565bac520f506be847a44d31145e41e7851c343c944e74e72c3bc93", size = 35892101, upload-time = "2026-04-27T09:58:40.303Z" },
+    { url = "https://files.pythonhosted.org/packages/09/f6/8a01c6c0ed2a5bc06bae3316e93c5f0359902d1f77ba8555ce448159980e/nrel_pysam-7.1.1.post1-cp313-cp313-manylinux2014_aarch64.whl", hash = "sha256:e2cc365497cc8dbfd2a5d90250ef8beb861b530f15698d99263508e4a6b082fd", size = 45196738, upload-time = "2026-04-28T09:54:44.573Z" },
+    { url = "https://files.pythonhosted.org/packages/ed/45/0d3c25f4e644e691af9f80d609a3e30d3978831ecb98c54390be0dd1be4e/nrel_pysam-7.1.1.post1-cp313-cp313-manylinux2014_x86_64.whl", hash = "sha256:44fe7e4aaf962f6118631ef7913d98b71c6be317879698f9bd8e88288f45d9d6", size = 47252240, upload-time = "2026-04-28T09:57:29.798Z" },
+    { url = "https://files.pythonhosted.org/packages/2d/2d/26e6ddc30bcf2263ec47e1039e1dbbd99fb8bcb91f13113a6b2ca2829886/nrel_pysam-7.1.1.post1-cp313-cp313-win_amd64.whl", hash = "sha256:678b5b1bd57a013574dce30156c8bffd601f999e1f9609686daeff7411e0dcb1", size = 33206944, upload-time = "2026-04-26T08:12:40.118Z" },
+]
+
+[[package]]
 name = "packaging"
 version = "26.2"
 source = { registry = "https://pypi.org/simple" }
@@ -198,12 +216,14 @@ source = { editable = "packages/ratebook-data" }
 dependencies = [
     { name = "duckdb" },
     { name = "httpx" },
+    { name = "ratebook" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "duckdb", specifier = ">=1.0" },
     { name = "httpx", specifier = ">=0.27" },
+    { name = "ratebook", editable = "packages/ratebook" },
 ]
 
 [[package]]

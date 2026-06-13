@@ -8,6 +8,11 @@ dev = [
     "hypothesis>=6.100",
     "ruff>=0.5",
 ]
+# PySAM is the validation oracle for the rate engine (tests skip if it is absent). It is a
+# test/validation dependency only — the engine itself has zero runtime dependencies.
+validation = [
+    "nrel-pysam>=7.0",
+]
 
 [tool.ruff]
 target-version = "py312"

@@ -1,7 +1,87 @@
 """Ratebook rate engine: deterministic, pure-function US electricity tariff math.
 
-Sprint 0 target (roadmap item 3): tiered + TOU + seasonal energy charges plus fixed
-charges, property-tested with hypothesis and validated against PySAM utilityrate5.
+Public surface:
+
+- Schema (``ratebook.schema``): :class:`Tariff` and its parts — the data model shared with
+  the data plant and the future TypeScript port via JSON test vectors.
+- Engine (``ratebook.engine``): :func:`estimate_bill`, :func:`estimate_annual`,
+  :func:`supported`, with :class:`Usage` / :class:`BillingWindow` inputs and
+  :class:`BillResult` / :class:`Refusal` outputs.
+- Validation (``ratebook.validate``): grader-shared :func:`validate_tariff` checks.
 """
 
+from .engine import (
+    AnnualResult,
+    BillingWindow,
+    BillResult,
+    LineItem,
+    Refusal,
+    RefusalReason,
+    SupportReport,
+    Usage,
+    estimate_annual,
+    estimate_bill,
+    supported,
+)
+from .schema import (
+    EffectiveRange,
+    EnergyPeriod,
+    EnergyRateStructure,
+    EnergyTier,
+    FixedCharge,
+    FixedChargeUnit,
+    HolidayPolicy,
+    MeteringOption,
+    MinCharge,
+    MinChargeUnit,
+    Provenance,
+    Schedule,
+    Sector,
+    SourceDocument,
+    Tariff,
+    TariffIdentity,
+    TariffType,
+    TierMaxUnit,
+    UnsupportedFeature,
+    UnsupportedKind,
+)
+from .validate import Issue, validate_tariff
+
 __version__ = "0.0.1"
+
+__all__ = [
+    "AnnualResult",
+    "BillResult",
+    "BillingWindow",
+    "EffectiveRange",
+    "EnergyPeriod",
+    "EnergyRateStructure",
+    "EnergyTier",
+    "FixedCharge",
+    "FixedChargeUnit",
+    "HolidayPolicy",
+    "Issue",
+    "LineItem",
+    "MeteringOption",
+    "MinCharge",
+    "MinChargeUnit",
+    "Provenance",
+    "Refusal",
+    "RefusalReason",
+    "Schedule",
+    "Sector",
+    "SourceDocument",
+    "SupportReport",
+    "Tariff",
+    "TariffIdentity",
+    "TariffType",
+    "TierMaxUnit",
+    "UnsupportedFeature",
+    "UnsupportedKind",
+    "Usage",
+    "__version__",
+    "estimate_annual",
+    "estimate_bill",
+    "supported",
+    "validate_tariff",
+]

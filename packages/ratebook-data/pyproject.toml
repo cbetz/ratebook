@@ -8,7 +8,11 @@ requires-python = ">=3.12"
 dependencies = [
     "duckdb>=1.0",
     "httpx>=0.27",
+    "ratebook",
 ]
+
+[tool.uv.sources]
+ratebook = { workspace = true }
 
 [project.scripts]
 ratebook-data = "ratebook_data.cli:main"
