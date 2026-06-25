@@ -4,12 +4,26 @@ version = "0.0.1"
 description = "MCP server exposing the Ratebook tariff database and rate engine to agents."
 readme = "README.md"
 license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{name = "Chris Betz"}]
 requires-python = ">=3.12"
+keywords = ["mcp", "model-context-protocol", "electricity", "tariff", "energy", "utility", "agents"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering",
+]
 dependencies = [
     "ratebook",
     "ratebook-data",
     "mcp>=1.2",
 ]
+
+[project.urls]
+Homepage = "https://github.com/cbetz/ratebook"
+Repository = "https://github.com/cbetz/ratebook"
+Issues = "https://github.com/cbetz/ratebook/issues"
 
 [project.scripts]
 ratebook-mcp = "ratebook_mcp.server:main"

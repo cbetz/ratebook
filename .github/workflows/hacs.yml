@@ -1,0 +1,33 @@
+name: HACS
+
+# Manual-only for now (see PATH CAVEAT below): the integration is not yet at a repo-root
+# `custom_components/`, so this would report path errors on every push. Run it on demand while
+# iterating; switch to push/pull_request once the HACS layout is fixed.
+on:
+  workflow_dispatch:
+
+# PATH CAVEAT: HACS expects the integration's `custom_components/<domain>/`
+# directory at the repository root (or in a dedicated repository). In this
+# monorepo the integration currently lives at
+#   packages/ratebook-homeassistant/custom_components/ratebook
+# so `content_in_root: false` in hacs.json is not enough on its own — HACS
+# still resolves `custom_components/` relative to the repo root. Until the
+# integration is moved to a root-level `custom_components/` (or split into a
+# dedicated `ratebook-homeassistant` repo), this validation will report path
+# errors. Configured here as best as possible; revisit once the path is fixed.
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: HACS validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: HACS validation
+        uses: hacs/action@main
+        with:
+          category: integration

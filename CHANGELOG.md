@@ -1,0 +1,45 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+Until the first tagged release, everything lives under **Unreleased**. The engines are
+versioned together: the Python engine and the TypeScript port must always reproduce the same
+JSON test vectors, so a change to one is a change to both.
+
+## [Unreleased]
+
+### Added
+
+- **Rate engine** (`packages/ratebook`): deterministic, pure-function engine that prices US
+  electricity tariffs from a typed schema. `Decimal` end to end, JSON-as-strings for exact
+  cross-language arithmetic. One accounting abstraction (`BillingWindow`); day count is a
+  required explicit input, never inferred. Refusal is a typed return value (`BillResult.ok =
+  False`), never a partial number — "unknown" is a first-class answer. Frozen dataclasses,
+  zero runtime dependencies, hand-written JSON round-trip.
+- **Shared test vectors** (`packages/ratebook/tests/vectors/v0_bills.json`): the cross-engine
+  contract. Regenerated via `uv run python packages/ratebook/tests/generate_vectors.py`.
+- **Data plant** (`packages/ratebook-data`): ingestion and extraction pipeline. `uv run
+  ratebook-data urdb` downloads the URDB bulk CSV into `data/raw/` and loads it into a DuckDB
+  corpus, recording the source URL and SHA-256. Includes golden-set and bill-match tests, plus
+  PySAM cross-validation.
+- **MCP server** (`packages/ratebook-mcp`): stdio MCP server (`uv run ratebook-mcp`) exposing
+  four tools over the corpus and engine — `lookup_tariff`, `estimate_bill`, `compare_plans`,
+  and `best_charge_window`.
+- **TypeScript engine port** (`packages/ratebook-ts`, `@ratebook/engine`): port of the rate
+  engine held to the Python engine via the shared JSON test vectors. Tested with vitest
+  (`pnpm -C packages/ratebook-ts test`).
+- **Home Assistant integration** (`packages/ratebook-homeassistant`): custom integration with a
+  config flow and two sensors over the engine — current marginal electricity price (with the
+  day's schedule as attributes, including an evcc-shaped forecast) and the start time of the
+  cheapest contiguous charge window over the next 24 hours.
+
+### Notes
+
+- Pre-release. Schema, APIs, and the corpus may change without notice until a tagged release.
+- The published datasets are dedicated to the public domain under CC0-1.0; the seed corpus
+  derives from the CC0 U.S. Utility Rate Database (URDB).
+
+[Unreleased]: https://github.com/cbetz/ratebook/commits/main

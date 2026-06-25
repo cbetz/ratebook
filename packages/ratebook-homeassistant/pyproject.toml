@@ -4,10 +4,24 @@ version = "0.0.1"
 description = "Home Assistant adapter for the Ratebook rate engine: tariff pricing, price schedule, and cheapest-charge-window helpers."
 readme = "README.md"
 license = "Apache-2.0"
+license-files = ["LICENSE"]
+authors = [{name = "Chris Betz"}]
 requires-python = ">=3.12"
+keywords = ["home-assistant", "electricity", "tariff", "energy", "utility", "smart-home", "ev-charging"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Home Automation",
+]
 dependencies = [
     "ratebook",
 ]
+
+[project.urls]
+Homepage = "https://github.com/cbetz/ratebook"
+Repository = "https://github.com/cbetz/ratebook"
+Issues = "https://github.com/cbetz/ratebook/issues"
 
 [tool.uv.sources]
 ratebook = { workspace = true }

@@ -100,7 +100,7 @@ The 737 columns decompose into 11 families with zero leftovers. 664 columns (90%
 
 **Max populated indices.** Corpus-wide energy reaches period 34 / tier 10, but periods ≥24 carry only sell+unit cells (10 rows, sell-only feed-in structures), periods 15–23 are nearly all sell-only (34 rows), and only 2 rows have buy rates beyond period 14. Active residential never exceeds energy period 9 / tier 7; 99.7% fit within 6 periods. Demand: corpus p≤8/t≤15, active residential p≤3; flat demand corpus p≤7/t≤16, residential p≤2; coincident p≤2/t0 only.
 
-Corpus-wide (commercial-dominated) the demand families are far more populated — TOU demand 13.1%, flat demand 36.4% — so demand support matters for any non-residential expansion even though it's nearly dead weight for the residential focus.
+Corpus-wide (commercial-dominated) the demand families are far more populated — TOU demand 13.1%, flat demand 36.4% — so demand support matters for any non-residential coverage even though it is rarely used by residential rates.
 
 ---
 

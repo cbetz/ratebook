@@ -37,5 +37,5 @@ to match. The `forecast` attribute covers the next 48 hours, recomputed every 5 
 - v0 prices are the tariff's **energy marginal price** (the time-of-use signal evcc needs to
   pick charge windows). Demand charges and tier-vs-baseline position aren't modeled — see the
   engine docs. For pure time-of-use plans this is exact.
-- Non-Home-Assistant users: the ratebook engine/MCP server will expose this forecast as a
-  direct HTTP endpoint (no HA required). Until then, the HA sensor is the bridge.
+- Non-Home-Assistant users can produce the same forecast by running the `ratebook` engine /
+  `ratebook-mcp` server directly; the HA sensor is just a convenient bridge for HA setups.

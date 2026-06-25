@@ -1,0 +1,124 @@
+# Roadmap
+
+What's shipped, what's next, and the open questions. Updated at the end of each working session.
+Status: **pre-release.** Releases are milestone-gated (on demo artifacts), not date-gated.
+
+## Where things stand
+
+The core loop is proven: a deterministic rate engine, validated against an independent
+reference (NREL PySAM) and against a real bill; an LLM extraction pipeline that turns utility
+tariff PDFs into structured records; an MCP server; a TypeScript engine port held to the Python
+engine by shared test vectors; and a Home Assistant integration. What's *not* done yet is
+breadth (coverage beyond the seed set), freshness automation, and the reproducible public
+scorecard — see "Next."
+
+## Milestones (open deliverables)
+
+- **M1 — Engine + seed corpus.** ✅ URDB bulk → extended schema; deterministic Python rate
+  engine with property tests + PySAM cross-validation; first PDF extractions calibrated against
+  URDB. Demo: reproduce a real residential bill within 2% once its components are supplied.
+- **M2 — Freshness + integrations.** Crawler with change detection on the top utilities; monthly
+  versioned dataset releases; the TypeScript engine port (done); `ratebook-mcp` (done) and the
+  Home Assistant integration (done); recipes/PRs offering a Ratebook price source to evcc and
+  EMHASS. Public launch is gated on the interactive bill-match demo + a reproducible scorecard.
+- **M3 — Coverage + a queryable surface.** Broaden extraction coverage; address→tariff
+  resolution; the public tariff explorer (also the SEO surface); richer provenance per record.
+- **M4 — Analysis as content.** Event-driven bill-impact write-ups on rate cases/changes, and a
+  "State of US Electricity Rates" report built on the dataset.
+
+Business/sustainability planning is tracked separately in `docs/private/` (gitignored) and is
+deliberately kept out of the public repo.
+
+## Open decisions
+
+- [x] License split — **code Apache-2.0, data CC0-1.0** (CC0 matches the URDB seed corpus and
+  maximizes adoption; the value is freshness, not the snapshot).
+- [x] Name/availability — PyPI `ratebook`/`ratebook-data`/`ratebook-mcp` and npm
+  `ratebook`/`ratebook-mcp` are free; `.com`/`.org` are taken. Always pair the name with an
+  energy qualifier in copy.
+- [ ] Make the golden-set scorecard reproducible from the repo (commit the per-pair graded
+  results + a single entrypoint) so `docs/GOLDEN_SET.md` regenerates instead of being a
+  hand-recorded snapshot.
+- [ ] Schema governance: how community tariff corrections flow into golden sets (the
+  `tariff-correction` issue form → a diff + a golden-set addition).
+
+## What's shipped (session log)
+
+- **Home Assistant integration.** `packages/ratebook-homeassistant`: a thin HA custom
+  integration (`custom_components/ratebook`) over a tested pure-Python adapter (`ratebook_ha`)
+  that wraps the engine. Two sensors — `sensor.ratebook_electricity_price` (current marginal
+  $/kWh + `today`/`tomorrow` hourly schedule attributes, the evcc-compatible shape) and
+  `sensor.ratebook_cheapest_charge_window` (start of the cheapest contiguous charge block, via
+  the engine's TOU charge-window math). Config flow picks a bundled example tariff or accepts
+  pasted tariff JSON. The price logic is unit-tested without an HA install; the HA shell is
+  validated by manifest checks + `py_compile`. (Install/HACS packaging is still being finalized
+  — see the punch-list in `docs/private/`.)
+
+- **TypeScript engine port (`@ratebook/engine`).** `packages/ratebook-ts` (pnpm + vitest +
+  decimal.js): schema mirror + `estimateBill` + `supported`, exact-decimal throughout. The
+  cross-engine contract is enforced by sharing the SAME golden vectors — a committed,
+  reproducible generator (`packages/ratebook/tests/generate_vectors.py`) produces 10 cases
+  (tiers, hourly TOU, min-charge floor, kWh-daily scaling, $/day fixed, identical-ladder
+  aggregate, signed credit, demand refusal); both engines reproduce them byte-for-byte.
+  Decimal-as-string canonicalization matches across languages.
+
+- **ratebook-mcp server (v0.1 surface).** Four tools over the corpus + engine: `lookup_tariff`
+  (search by utility/eiaid/label with provenance + a `supported` flag), `estimate_bill`,
+  `compare_plans` (ranked cheapest-first), `best_charge_window` (cheapest contiguous block to
+  add EV load via the TOU marginal-price signal). Added the charge-window math to the engine
+  (`hourly_marginal_prices`, `cheapest_charge_window`, `period_at` — pure, tested) and corpus
+  search. The service layer is unit-tested; `server.py` is the thin FastMCP binding
+  (`uv run ratebook-mcp`, stdio). All four tools register and pass a smoke test against the
+  built corpus.
+
+- **Golden-set extraction eval.** `packages/ratebook-data/golden/manifest.json` pairs URDB records with
+  source PDF URLs; 18 of 20 selected PDFs fetched (2 link-rot). A one-time eval run extracted
+  each PDF and recorded a structured grade per pair; `ratebook_data.golden` aggregates such
+  graded results into a scorecard. **Snapshot result (`usurdb-2026-06-13`): 92% overall
+  structural, 0 extraction failures**, with the notable pattern that every fixed-charge
+  disagreement is the fresh extraction being current and the URDB record being stale/mislinked.
+  ⚠️ This scorecard is a **manually recorded snapshot** — the per-pair results JSON is not yet
+  committed, so it does not regenerate from the repo (see Open decisions). Details:
+  `docs/GOLDEN_SET.md`.
+
+- **PECO extraction + bill-match.** `ratebook_data.extract` is a two-step pipeline: a Claude
+  structured-output **extractor** (`EXTRACTION_SCHEMA`, native PDF, `claude-opus-4-8`) → a
+  **deterministic converter + validator** (`extracted_to_tariff`, `grade_extraction`) that
+  reuses `ratebook.validate`. Run on the real PECO Rate R PDF, the extractor pulled distribution
+  `$0.10276/kWh` + `$11.30/mo` fixed (no TOU/tiers); the validator confirmed arithmetic/
+  structural consistency and caught a real converter bug (PECO's two fixed charges are mutually
+  exclusive; the converter was summing them → added an `applies_to` qualifier + guard +
+  regression test). **The finding:** a distribution rate sheet prices only ~half the bill; the
+  generation ("Price to Compare") + transmission + riders live in separate documents. URDB's
+  bundled `$0.21884/kWh` would be ~49% high for this plan. See `docs/EXTRACTION_PECO.md`.
+
+- **Bill-match acceptance test.** Given the components of a real PECO bill (May 2026, 1,244 kWh,
+  $276.35), the **engine reproduces the total to a fraction of a cent** (`test_billmatch_peco.py`)
+  — well inside the 2% bar. This validates the *engine's arithmetic given the components*; it is
+  not yet end-to-end from extraction alone (generation/transmission/riders still need their own
+  sourcing — that's the next data-plant step). The distribution rate the extractor pulled from
+  the tariff PDF reproduces the bill's distribution line exactly. No bill PII is committed.
+
+- **Rate engine v0 + schema.** `ratebook.schema` (frozen dataclasses, closed `StrEnum` units,
+  JSON round-trip with canonical Decimal-as-string for the TS port), `ratebook.engine`
+  (`estimate_bill`/`estimate_annual`/`supported` over a single `BillingWindow` abstraction, a
+  typed `Refusal` instead of wrong numbers), `ratebook.validate`, and the URDB importer. Designed
+  via a judged panel → `docs/ENGINE_SPEC.md`. **PySAM `utilityrate5` cross-validation: within
+  ~$0.02/month on 7 real URDB tariffs** spanning flat/tiered/seasonal/TOU classes (test-only
+  oracle; skips when PySAM isn't installed). Adversarial review found and fixed several wrong-bill
+  bugs (kWh-daily proration, adj-only demand, canonical Decimal serialization). Corpus import:
+  6,279/6,295 active-residential rates import; 16 quarantined as malformed.
+
+- **Scaffold + seed corpus.** uv workspace (`ratebook`, `ratebook-data`, `ratebook-mcp`); pytest
+  + hypothesis + ruff; Python 3.12 pinned. `uv run ratebook-data urdb` downloads `usurdb.csv.gz`
+  with a sha256/ETag provenance sidecar and loads 58,866 rates into DuckDB. Corpus exploration →
+  `docs/URDB_NOTES.md` (headline: ~151 utilities updated in 2025; tiered + TOU + seasonal + fixed
+  covers 99.1% of active residential rates, validating the v0 engine scope).
+
+## Next
+
+1. Wire generation/transmission/rider sourcing so bill-match works from utility data alone, not
+   the bill's own printed components.
+2. Make the golden scorecard reproducible (commit graded results + one entrypoint).
+3. Crawler + change detection + monthly versioned releases on the top utilities.
+4. Finalize HA install/HACS packaging; send the evcc/EMHASS integration drafts.

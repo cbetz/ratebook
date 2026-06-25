@@ -1,10 +1,12 @@
 """Eval-harnessed tariff extraction: utility PDF -> structured tariff -> :class:`Tariff`.
 
-The pipeline is two-pass (per the project brief): a Claude structured-output **extractor**
-turns a tariff PDF into an :data:`EXTRACTION_SCHEMA`-shaped record, then an independent
-**grader** checks it for arithmetic consistency. This module holds the prompt, the schema,
-the production API call, and the deterministic converter/grader; the grading logic reuses
-``ratebook.validate`` so the engine and the eval harness never disagree about "valid".
+The pipeline has two steps: a Claude structured-output **extractor** turns a tariff PDF into an
+:data:`EXTRACTION_SCHEMA`-shaped record, then a **deterministic converter + validator** turns
+that record into a priceable tariff and checks it for arithmetic/structural consistency. This
+module holds the prompt, the schema, the production API call, and that deterministic
+converter/validator; the validation logic reuses ``ratebook.validate`` so the engine and the
+eval harness never disagree about "valid". (A model-based grading pass that re-reads the source
+PDF is planned, not yet implemented here.)
 
 Extraction surfaces the reality URDB hides: a single rate sheet often carries only the
 *distribution* component, with generation ("Price to Compare") and transmission in separate

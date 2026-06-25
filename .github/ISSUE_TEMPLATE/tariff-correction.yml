@@ -1,0 +1,93 @@
+name: Tariff correction
+description: Report a wrong or stale electricity rate so we can fix the corpus. This is the most valuable contribution you can make.
+title: "[tariff] <utility> — <plan/rate code>"
+labels: ["tariff-correction"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping keep Ratebook honest. A correction is the flagship contribution: a
+        single well-sourced fix improves every app, device, and agent that prices this plan.
+
+        The engine is deliberately boring and deterministic — if it returns the wrong number,
+        the cause is almost always a data error in the tariff, not the math. Point us at the
+        utility's own published tariff and tell us what's off. The more precise the source, the
+        faster this gets merged.
+  - type: input
+    id: utility
+    attributes:
+      label: Utility name
+      description: The utility as it bills customers (e.g. "Pacific Gas & Electric", "PECO").
+      placeholder: Pacific Gas & Electric Company
+    validations:
+      required: true
+  - type: input
+    id: plan-code
+    attributes:
+      label: Plan / rate code
+      description: The utility's own schedule or rate code (e.g. "E-TOU-C", "RS", "Schedule 1").
+      placeholder: E-TOU-C
+    validations:
+      required: true
+  - type: input
+    id: state
+    attributes:
+      label: State
+      description: Two-letter US state or territory code for the service area.
+      placeholder: CA
+    validations:
+      required: true
+  - type: input
+    id: source-url
+    attributes:
+      label: Source tariff PDF URL
+      description: >
+        A link to the utility's (or its regulator's) published tariff sheet that proves the
+        correct rate — ideally a direct PDF. This is what makes the correction verifiable; without
+        it we can't merge. A PUC/PSC filing page is fine if there's no stable PDF.
+      placeholder: https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-TOU-C.pdf
+    validations:
+      required: true
+  - type: textarea
+    id: currently-returns
+    attributes:
+      label: What Ratebook currently returns
+      description: >
+        The value(s) Ratebook reports today — the wrong/stale rate, charge, tier boundary, TOU
+        period, or refusal. Paste the relevant slice of output (lookup_tariff, estimate_bill, etc.)
+        if you have it.
+      placeholder: |
+        Off-peak energy charge: $0.28/kWh
+        (from lookup_tariff utility="PG&E" plan="E-TOU-C")
+    validations:
+      required: true
+  - type: textarea
+    id: should-return
+    attributes:
+      label: What it should return
+      description: >
+        The correct value(s), as stated on the source tariff. Quote the line or section so a
+        reviewer can find it in the PDF.
+      placeholder: |
+        Off-peak energy charge: $0.31/kWh
+        (Sheet 2, "Total Energy Rates ($ per kWh)", Off-Peak)
+    validations:
+      required: true
+  - type: input
+    id: effective-date
+    attributes:
+      label: Effective date
+      description: >
+        The date the corrected rate took (or takes) effect, per the tariff sheet (YYYY-MM-DD).
+        Tariffs are versioned by effective date, so this tells us whether it's a correction to the
+        current rate or a new rate that supersedes it.
+      placeholder: 2026-01-01
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else
+      description: Optional context — observed-vs-expected on a real bill, related plans, rider details.
+    validations:
+      required: false

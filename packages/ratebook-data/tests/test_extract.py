@@ -113,8 +113,8 @@ def test_summed_components_make_a_bundled_tier() -> None:
     assert priced.tariff.energy.periods[0].tiers[0].effective_rate == Decimal("0.21276")
 
 
-# The real two-pass extraction from the PECO sheet lists BOTH fixed charges; the grader flagged
-# that they are mutually exclusive. The converter must apply only the standard $11.30.
+# The extraction from the PECO sheet lists BOTH fixed charges; the deterministic validator
+# flagged that they are mutually exclusive. The converter must apply only the standard $11.30.
 PECO_EXTRACTION_TWO_FIXED = {
     **PECO_EXTRACTION,
     "fixed_charges": [

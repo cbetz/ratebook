@@ -4,6 +4,23 @@
   "description": "Deterministic US electricity tariff rate engine — TypeScript port, sharing JSON test vectors with the Python engine.",
   "type": "module",
   "license": "Apache-2.0",
+  "author": "Chris Betz (https://github.com/cbetz)",
+  "homepage": "https://github.com/cbetz/ratebook#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cbetz/ratebook.git",
+    "directory": "packages/ratebook-ts"
+  },
+  "bugs": {
+    "url": "https://github.com/cbetz/ratebook/issues"
+  },
+  "keywords": ["electricity", "tariffs", "energy", "rate-engine", "ratebook"],
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": ["dist"],

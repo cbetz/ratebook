@@ -1,0 +1,31 @@
+name: Hassfest
+
+# Manual-only for now (see PATH CAVEAT below): the integration is not yet at a repo-root
+# `custom_components/`, so hassfest would fail on every push. Run it on demand while iterating;
+# switch to push/pull_request once the integration path is fixed.
+on:
+  workflow_dispatch:
+
+# PATH CAVEAT: hassfest discovers integrations under a root-level
+# `custom_components/` directory. In this monorepo the integration currently
+# lives at
+#   packages/ratebook-homeassistant/custom_components/ratebook
+# rather than at the repository root, so hassfest will not find the manifest
+# as-is. Until the integration is moved to a root-level `custom_components/`
+# (or split into a dedicated `ratebook-homeassistant` repo), this manifest
+# validation will need a path fix. Configured here as best as possible;
+# revisit once the path is fixed.
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate manifest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Hassfest validation
+        uses: home-assistant/actions/hassfest@master

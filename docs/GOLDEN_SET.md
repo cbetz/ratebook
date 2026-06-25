@@ -1,12 +1,21 @@
 # Golden-set extraction scorecard
 
-Snapshot: `usurdb-2026-06-13`. The golden set pairs URDB structured records (the reference)
-with their source tariff PDFs. Each PDF is independently extracted by a Claude
-structured-output pass, then graded by a second independent pass against the URDB record. This
-is the per-utility accuracy scorecard the project publishes as content.
+Snapshot: `usurdb-2026-06-13`. The golden set pairs URDB structured records (the reference) with
+their source tariff PDFs. Each PDF was extracted by a Claude structured-output pass and the
+result graded against the URDB record. This is the per-utility accuracy scorecard the project
+publishes as content.
 
-**Graded 18 of 20 selected pairs** — 2 unfetchable (LIPA 403, AEP Ohio 404; link rot, far
-below the ~30% the corpus exploration predicted for big utilities). 0 extraction failures.
+> **Provenance / reproducibility (read this first).** The numbers below are a **manually
+> recorded snapshot** from a one-time eval run over the `usurdb-2026-06-13` snapshot. The
+> per-pair graded-results JSON is **not yet committed**, so this scorecard does **not** currently
+> regenerate from the repo with a single command — `ratebook_data.golden.render_scorecard_md`
+> renders a scorecard *from* a results list, but that list isn't checked in, and the extractor
+> needs the `anthropic` extra to reproduce. Wiring this into a reproducible, committed eval run
+> is a tracked roadmap item. Treat the figures as a recorded result, not an automated CI metric,
+> until then.
+
+**Graded 18 of 20 selected pairs** — 2 unfetchable (LIPA 403, AEP Ohio 404; link rot). 0
+extraction failures.
 
 ## Headline
 
@@ -21,9 +30,9 @@ below the ~30% the corpus exploration predicted for big utilities). 0 extraction
 
 Verdicts: **7 pass, 11 pass-with-notes, 0 fail.**
 
-But the raw "92%" undersells it, because the grader re-read every source PDF — and **every
-fixed-charge disagreement is the freshly-extracted PDF being correct and URDB being stale or
-mislinked**, not an extraction error:
+But the raw "92%" undersells it, because the grading re-checked every extraction against its
+source — and **every fixed-charge disagreement is the freshly-extracted PDF being correct and
+URDB being stale or mislinked**, not an extraction error:
 
 | Utility | Extracted (verified vs PDF) | URDB record | What's going on |
 |---|---|---|---|
@@ -42,15 +51,15 @@ Two time-of-use disagreements:
   rider; URDB correctly classifies the base schedule as non-TOU. A genuine (minor) extractor
   over-flag — the one disagreement that is actually the extractor's.
 
-Net: of the field-level disagreements, **four are URDB being stale, one is a URDB
-source-linking bug, one is a presentation difference, and one is a real extractor over-flag.**
-Read against ground truth, the fresh extraction is *more* current than the reference it's
-graded against — which is the entire disruption thesis, demonstrated across 18 utilities.
+Net: of the field-level disagreements, **four are URDB being stale, one is a URDB source-linking
+bug, one is a presentation difference, and one is a real extractor over-flag.** Read against the
+source documents, the fresh extraction is *more* current than the reference it's graded
+against — which is the entire disruption thesis, demonstrated across 18 utilities.
 
 ## The distribution-vs-bundled split generalizes
 
-The PECO finding (a rate sheet prices distribution only; URDB carries a stale bundled number)
-is not a one-off. Energy-rate relationship to the URDB record across the 18:
+The PECO finding (a rate sheet prices distribution only; URDB carries a stale bundled number) is
+not a one-off. Energy-rate relationship to the URDB record across the 18:
 
 - **`distribution_only_vs_bundled`: 7** — PECO (×2), ComEd, DTE, Dominion, LADWP, PacifiCorp.
   These are restructured/retail-choice states where the sheet prices the wires component and
@@ -59,8 +68,8 @@ is not a one-off. Energy-rate relationship to the URDB record across the 18:
   Nevada, We Energies) whose sheets are genuinely bundled, so the URDB bundled rate lines up.
 - **`diverges`: 3** — Alabama, Eversource CT, Pepco — bundled-vs-bundled but a vintage/rider gap.
 
-This is the map of where a single bundled number is safe (vertically integrated) versus where
-it silently misstates the bill by ~half (restructured states) — exactly the coverage Ratebook
+This is the map of where a single bundled number is safe (vertically integrated) versus where it
+silently misstates the bill by ~half (restructured states) — exactly the coverage Ratebook
 exists to fix.
 
 ## Per-utility detail
@@ -89,10 +98,15 @@ exists to fix.
 ¹ URDB source URL mislinked to the non-TOU sheet. ² Extracted value is current; URDB is stale.
 ³ Optional TOU rider; extractor over-flagged. ⁴ $12.00 + $0.16 Lifeline; URDB folds to $12.16.
 
-## How this was produced
+## How this was produced (and how it should be)
 
-`ratebook_data/golden/manifest.json` defines the pairs (label → source URL + URDB ground
-truth). The eval extracts each PDF with the two-pass pipeline (`ratebook_data.extract`) and
-aggregates the graded results with `ratebook_data.golden.render_scorecard_md`. Re-runnable on
-any monthly snapshot; the regression of these numbers over time is itself the freshness signal.
-PDFs are not committed (re-fetchable utility documents).
+`packages/ratebook-data/golden/manifest.json` defines the pairs (label → source URL + URDB ground truth).
+A one-time eval run extracted each PDF with `ratebook_data.extract` and recorded a structured
+grade per pair (`sector_match`, `tiered_match`, `tou_match`, `fixed_charge_match`,
+`arithmetic_consistent`, `rate_relationship`, `verdict`); `ratebook_data.golden.build_scorecard`
+/ `render_scorecard_md` aggregate those grades into the headline table above. PDFs are not
+committed (re-fetchable utility documents).
+
+**To make this a real freshness signal**, the per-pair graded results must be committed and a
+single entrypoint must regenerate this file on any monthly snapshot — that's a tracked roadmap
+item. Until then, this page is a recorded snapshot, not an automated metric.

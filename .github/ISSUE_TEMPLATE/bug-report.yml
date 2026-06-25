@@ -1,0 +1,76 @@
+name: Bug report
+description: Report incorrect behavior in the engine, data plant, MCP server, TS port, or Home Assistant integration.
+title: "[bug] <short summary>"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for filing. If this is a **wrong electricity rate** rather than a code defect, please
+        use the "Tariff correction" template instead — it has the fields a reviewer needs to verify
+        and merge the fix.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: A clear description of the bug, including any error message or wrong output. Paste tracebacks verbatim.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+      description: What you expected to happen instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: >
+        Minimal steps, ideally a runnable snippet or the exact command. If the engines disagree or a
+        test vector is involved, say which.
+      placeholder: |
+        1. uv sync
+        2. uv run python -c "from ratebook import ..."
+        3. Observe ...
+      render: shell
+    validations:
+      required: true
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package
+      description: Where the bug shows up.
+      options:
+        - ratebook engine (packages/ratebook)
+        - ratebook-data (data plant / extraction)
+        - ratebook-mcp (MCP server)
+        - ratebook-ts (TypeScript engine port)
+        - home-assistant (custom integration)
+        - not sure
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version / commit
+      description: Package version, or the commit SHA you're on (`git rev-parse --short HEAD`).
+      placeholder: 0.0.1 / a1b2c3d
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: >
+        OS, Python version (`python --version`), and — if relevant — Node/pnpm or Home Assistant
+        version. For TS-port issues, include the Node version.
+      placeholder: |
+        OS: macOS 15.5 (arm64)
+        Python: 3.12.4
+        Node: 22.5.0 / pnpm 9.x
+        Home Assistant: 2026.6.0
+      render: shell
+    validations:
+      required: true

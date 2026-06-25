@@ -1,0 +1,22 @@
+cff-version: 1.2.0
+message: "If you use Ratebook, please cite it."
+type: software
+title: "Ratebook"
+authors:
+  - family-names: Betz
+    given-names: Chris
+    alias: cbetz
+repository-code: "https://github.com/cbetz/ratebook"
+url: "https://github.com/cbetz/ratebook"
+abstract: "An openly-licensed database of US electricity tariffs, a deterministic rate engine, and an MCP server, so any app, device, or agent can answer what a kWh will cost and when to charge."
+keywords:
+  - electricity
+  - tariffs
+  - energy
+  - open-data
+  - rate-engine
+  - mcp
+  - home-assistant
+license: Apache-2.0
+version: 0.0.1
+# On the first tagged release, archive via Zenodo and add the minted DOI here as `doi:`.

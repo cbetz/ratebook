@@ -1,10 +1,12 @@
-"""Acceptance test: reproduce a real PECO residential bill within 2% (Sprint 0 item 4).
+"""Engine bill-match acceptance test: given a real bill's components, reproduce the total < 2%.
 
-This is the demo that proves the thesis end to end. Inputs are the rate/usage facts from a
-real PECO bill (May 2026 statement, 30-day service period, 1,244 kWh) — no account, address, or
-other personal data. The distribution rate (0.10276 $/kWh) is the value the extractor pulled
-from the Rate R tariff PDF, validated here against the bill's actual distribution line; the
-generation/transmission/rider components are the ones the tariff sheet only referenced.
+This validates the engine's arithmetic given the components — it is NOT end-to-end from
+extraction alone (generation/transmission/riders are supplied here, not extracted). Inputs are
+the rate/usage facts from a real PECO bill (May 2026 statement, 30-day service period,
+1,244 kWh) — no account, address, or other personal data. The distribution rate (0.10276 $/kWh)
+is the value the extractor pulled from the Rate R tariff PDF, validated here against the bill's
+actual distribution line; the generation/transmission/rider components are the ones the tariff
+sheet only referenced and are supplied from the bill.
 
 The engine, given all components, must reproduce the $276.35 total to well within 2%.
 """
