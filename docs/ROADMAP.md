@@ -125,6 +125,7 @@ deliberately kept out of the public repo.
 2. Regenerate the golden grades live (re-run extraction from source PDFs each snapshot); the
    aggregate scorecard is already reproducible + test-checked from the committed grades.
 3. Crawler + change detection + monthly versioned releases on the top utilities.
-4. HACS distribution: move the integration to a root-level `custom_components/` (likely a
-   dedicated `ratebook-homeassistant` repo) so HACS custom-repo install + the brands PR work.
-   Send the evcc/EMHASS integration drafts.
+4. HACS distribution: **done** — the synced mirror repo
+   [cbetz/ratebook-homeassistant](https://github.com/cbetz/ratebook-homeassistant) has the
+   root-level layout HACS needs (regenerate via `scripts/sync_dist_repo.sh`). Remaining: the
+   `home-assistant/brands` PR (icon in `brand-assets/`) and sending the evcc/EMHASS drafts.

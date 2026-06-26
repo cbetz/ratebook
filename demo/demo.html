@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ratebook — what will this kWh cost?</title>
+<script src="ratebook-engine.js"></script>
+<style>
+  :root { --bg:#0f1320; --card:#1b1f30; --ink:#e7eaf3; --dim:#8b90a8; --line:#2a2f44;
+          --accent:#7aa2f7; --good:#5ed69a; --warn:#e0af68; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif; }
+  .wrap { max-width:760px; margin:0 auto; padding:32px 20px 40px; }
+  h1 { font-size:26px; margin:0 0 2px; letter-spacing:-.01em; }
+  .tag { color:var(--dim); margin:0 0 24px; }
+  .mono { font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:22px 24px; margin:16px 0; }
+  .card h2 { font-size:15px; font-weight:600; color:var(--accent); margin:0 0 16px; text-transform:uppercase; letter-spacing:.06em; }
+  .row { display:flex; align-items:baseline; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+  .big { font-size:44px; font-weight:700; letter-spacing:-.02em; }
+  .big small { font-size:18px; color:var(--dim); font-weight:500; }
+  label { color:var(--dim); font-size:14px; }
+  input[type=range] { width:100%; margin:14px 0 4px; accent-color:var(--accent); height:6px; }
+  .usage { font-variant-numeric:tabular-nums; }
+  .toggle { display:flex; gap:10px; margin:6px 0 18px; }
+  .toggle button { flex:1; padding:14px; border-radius:10px; border:1px solid var(--line); background:#141828;
+    color:var(--ink); font-size:15px; cursor:pointer; transition:.12s; }
+  .toggle button.on { border-color:var(--accent); background:#243049; box-shadow:0 0 0 1px var(--accent) inset; }
+  .toggle button .h { display:block; font-size:13px; color:var(--dim); margin-top:3px; }
+  .save { color:var(--good); font-weight:600; }
+  .foot { color:var(--dim); font-size:13px; margin-top:22px; text-align:center; }
+  .pill { display:inline-block; background:#141828; border:1px solid var(--line); border-radius:999px;
+    padding:2px 10px; font-size:12px; color:var(--dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>⚡ Ratebook</h1>
+  <p class="tag">What will this kWh cost — and when should I charge? <span class="pill">deterministic engine · same Python &amp; TypeScript</span></p>
+
+  <div class="card">
+    <h2>Your monthly bill</h2>
+    <div class="row">
+      <div><label>Usage: <span class="usage mono" id="kwhLabel">900</span> kWh / month</label></div>
+      <div class="big">$<span id="flatTotal">—</span><small> / mo</small></div>
+    </div>
+    <input type="range" id="kwh" min="200" max="2000" step="50" value="900">
+    <label class="mono" id="flatPlan">Flat residential · $0.16/kWh + $10/mo</label>
+  </div>
+
+  <div class="card">
+    <h2>When you charge matters</h2>
+    <label>Add a 24 kWh EV charge on a time-of-use plan (off-peak $0.12 · 4–9pm peak $0.30):</label>
+    <div class="toggle">
+      <button id="btnOff" class="on" onclick="setCharge('off')">🌙 Charge 1–4am<span class="h">off-peak</span></button>
+      <button id="btnPeak" onclick="setCharge('peak')">🔆 Charge 6–9pm<span class="h">peak</span></button>
+    </div>
+    <div class="row">
+      <div class="big">$<span id="touTotal">—</span><small> / day</small></div>
+      <div class="mono save" id="savings"></div>
+    </div>
+  </div>
+
+  <p class="foot mono">github.com/cbetz/ratebook · every record carries its source &amp; confidence · "unknown" is a first-class answer</p>
+</div>
+
+<script>
+  const R = window.RatebookEngine;
+  const months = v => Array.from({length:12}, () => v);
+  const allZero = Array.from({length:24}, () => 0);
+  const dayPeak = Array.from({length:24}, (_,h) => (h>=16 && h<=20) ? 1 : 0); // 4–9pm
+  const tier = rate => ({rate, adj:"0", max:null, max_unit:"kWh", sell:null});
+  const base = { schema_version:0,
+    effective_range:{start:null,end:null,superseded_at:null,scheduled_end:null},
+    min_charge:null, unsupported:[], metering:"unknown", source_documents:[],
+    provenance:{urdb_label:null,urdb_latest_update:null,last_verified:null,confidence:null,snapshot_sha256:null} };
+  const ident = (code,name) => ({utility_id:"",eiaid:null,jurisdiction:null,plan_code:code,plan_name:name,sector:"residential",is_default_plan:null,tariff_type:"unknown"});
+  const sched = wk => ({weekday:months(wk), weekend:months(allZero), holiday_policy:"unknown"});
+
+  const FLAT = R.Tariff.fromJson({...base, identity:ident("FLAT","Flat residential"),
+    energy:{periods:[{tiers:[tier("0.16")]}]}, schedule:sched(allZero), fixed_charges:[{amount:"10",unit:"$/month"}]});
+  const TOU = R.Tariff.fromJson({...base, identity:ident("TOU","Time-of-use (EV)"),
+    energy:{periods:[{tiers:[tier("0.12")]},{tiers:[tier("0.30")]}]}, schedule:sched(dayPeak), fixed_charges:[{amount:"10",unit:"$/month"}]});
+
+  function flat() {
+    const kwh = +document.getElementById("kwh").value;
+    document.getElementById("kwhLabel").textContent = kwh.toLocaleString();
+    const bill = R.estimateBill(FLAT, R.Usage.aggregate(kwh), R.BillingWindow.fromIso("2026-04-28", 30));
+    document.getElementById("flatTotal").textContent = bill.ok ? Number(bill.total).toFixed(2) : "—";
+  }
+
+  function touDay(when) {
+    const load = Array.from({length:24}, () => 0.5);            // ~12 kWh/day base
+    const hrs = when === "peak" ? [18,19,20] : [1,2,3];          // 6–9pm vs 1–4am
+    hrs.forEach(h => load[h] += 8);                              // 24 kWh charge
+    const b = R.estimateBill(TOU, R.Usage.hourly(load.map(String)), R.BillingWindow.fromIso("2026-04-28", 1));
+    return b.ok ? Number(b.total) : null;
+  }
+
+  function setCharge(when) {
+    document.getElementById("btnOff").classList.toggle("on", when==="off");
+    document.getElementById("btnPeak").classList.toggle("on", when==="peak");
+    const cur = touDay(when), peak = touDay("peak"), off = touDay("off");
+    document.getElementById("touTotal").textContent = cur.toFixed(2);
+    const saved = peak - off;
+    document.getElementById("savings").textContent =
+      when==="off" ? `↓ $${saved.toFixed(2)}/day cheaper than peak (${Math.round(saved/peak*100)}%)` : `↑ $${saved.toFixed(2)}/day more than off-peak`;
+  }
+
+  document.getElementById("kwh").addEventListener("input", flat);
+  flat();
+  setCharge("off");
+</script>
+</body>
+</html>

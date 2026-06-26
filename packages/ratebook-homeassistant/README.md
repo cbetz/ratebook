@@ -31,9 +31,11 @@ under `custom_components/ratebook/vendor/`, so it has **no PyPI or network depen
 Assistant `config/custom_components/` directory, restart Home Assistant, then add the integration
 via Settings → Devices & Services → Add Integration → Ratebook.
 
-**HACS:** custom-repository install is pending a layout change — HACS expects `custom_components/`
-at a repository root, and this integration currently lives in a monorepo subdirectory (tracked in
-`docs/ROADMAP.md`).
+**HACS:** install from the distribution repo
+[cbetz/ratebook-homeassistant](https://github.com/cbetz/ratebook-homeassistant) — HACS → ⋮ →
+Custom repositories → add it as an **Integration**. That repo is a synced mirror of this
+directory with the root-level `custom_components/` layout HACS requires (regenerate it with
+`scripts/sync_dist_repo.sh`).
 
 > Status: v0. Prices are the tariff's energy marginal price (time-of-use signal); demand
 > charges and tier-vs-baseline position are not modeled — see the engine docs.
