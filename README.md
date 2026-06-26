@@ -9,6 +9,8 @@ can answer "what will this kWh cost me, and when should I charge?"
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
 [![CI](https://github.com/cbetz/ratebook/actions/workflows/ci.yml/badge.svg)](https://github.com/cbetz/ratebook/actions/workflows/ci.yml)
 
+![Ratebook: price a tariff with the engine, and the LLM-extraction accuracy scorecard](docs/quickstart.svg)
+
 > **Status: pre-release.** What works today: a deterministic rate engine (Python + a TypeScript
 > port held to it byte-for-byte), cross-validated against NREL's PySAM and shown to reproduce a
 > real bill's total once its components are supplied; an LLM pipeline that extracts tariff
