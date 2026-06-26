@@ -14,7 +14,7 @@ from datetime import date, datetime, time, timedelta
 from importlib import resources
 from typing import Any
 
-from ratebook import (
+from ..ratebook import (
     BillingWindow,
     Tariff,
     cheapest_charge_window,

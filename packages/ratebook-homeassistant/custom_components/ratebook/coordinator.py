@@ -9,7 +9,6 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 from homeassistant.util import dt as dt_util
-from ratebook_ha import pricing
 
 from .const import (
     CONF_CHARGE_HOURS,
@@ -22,6 +21,7 @@ from .const import (
     DOMAIN,
     LOGGER,
 )
+from .vendor.ratebook_ha import pricing
 
 
 class RatebookCoordinator(DataUpdateCoordinator[dict[str, Any]]):

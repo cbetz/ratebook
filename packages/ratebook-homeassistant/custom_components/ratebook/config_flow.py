@@ -6,7 +6,6 @@ from typing import Any
 
 import voluptuous as vol
 from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
-from ratebook_ha import pricing
 
 from .const import (
     CONF_CHARGE_HOURS,
@@ -18,6 +17,7 @@ from .const import (
     DEFAULT_CURRENCY,
     DOMAIN,
 )
+from .vendor.ratebook_ha import pricing
 
 
 def _validate(source: str, tariff_json: str) -> None:

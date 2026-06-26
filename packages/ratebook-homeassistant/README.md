@@ -24,12 +24,16 @@ set the charge-window length (hours) and currency.
 
 ## Install
 
-> ⚠️ **Not yet turnkey — packaging is being finalized.** The integration's `manifest.json`
-> currently lists a `ratebook-ha` requirement that is not published to PyPI yet, and the HACS
-> repository layout isn't finalized, so neither a plain copy nor a HACS custom-repository install
-> resolves its dependencies cleanly today. The price logic (`ratebook_ha`) is fully tested and
-> usable as a library right now; turnkey HA install — via vendored dependencies or published
-> packages plus a validated HACS layout — is tracked in `docs/ROADMAP.md`.
+The integration is self-contained: the `ratebook` engine and `ratebook_ha` adapter are vendored
+under `custom_components/ratebook/vendor/`, so it has **no PyPI or network dependencies**.
+
+**Manual copy (works today):** copy the `custom_components/ratebook` directory into your Home
+Assistant `config/custom_components/` directory, restart Home Assistant, then add the integration
+via Settings → Devices & Services → Add Integration → Ratebook.
+
+**HACS:** custom-repository install is pending a layout change — HACS expects `custom_components/`
+at a repository root, and this integration currently lives in a monorepo subdirectory (tracked in
+`docs/ROADMAP.md`).
 
 > Status: v0. Prices are the tariff's energy marginal price (time-of-use signal); demand
 > charges and tier-vs-baseline position are not modeled — see the engine docs.

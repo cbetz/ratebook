@@ -1,19 +1,25 @@
 """Structure + syntax validation for the HA integration (no Home Assistant install needed).
 
 The pricing logic is tested in test_pricing.py; this guards the integration shell: the manifest
-has the keys HA requires, the JSON files are well-formed and consistent, and every module is
-syntactically valid (py_compile compiles without executing the `homeassistant` imports).
+has the keys HA requires, the JSON files are well-formed and consistent, every module is
+syntactically valid (py_compile compiles without executing the `homeassistant` imports), and the
+vendored engine/adapter is in sync with the workspace source AND importable with no external deps.
 """
 
 from __future__ import annotations
 
+import importlib.util
 import json
 import py_compile
+import sys
+from datetime import datetime
 from pathlib import Path
 
 import pytest
 
-INTEGRATION = Path(__file__).resolve().parents[1] / "custom_components" / "ratebook"
+HA_PKG = Path(__file__).resolve().parents[1]
+INTEGRATION = HA_PKG / "custom_components" / "ratebook"
+VENDOR = INTEGRATION / "vendor"
 
 
 def _json(name: str) -> dict:
@@ -35,7 +41,9 @@ def test_manifest_has_required_keys() -> None:
         assert key in m, f"manifest missing {key}"
     assert m["domain"] == "ratebook"
     assert m["config_flow"] is True
-    assert any(r.startswith("ratebook-ha") for r in m["requirements"])
+    # The engine + adapter are vendored under vendor/, so the integration has NO external
+    # (pip/PyPI) requirements — it is copy-installable with zero network dependency.
+    assert m["requirements"] == []
 
 
 def test_const_domain_matches_manifest() -> None:
@@ -60,3 +68,47 @@ def test_strings_and_translation_match() -> None:
 )
 def test_module_compiles(module: str) -> None:
     py_compile.compile(str(INTEGRATION / module), doraise=True)
+
+
+# --------------------------------------------------------------------------------------
+# Vendored dependencies (vendor/): must stay in sync with source AND import with no deps.
+# --------------------------------------------------------------------------------------
+def _tree(root: Path) -> dict[str, bytes]:
+    """Relative-path -> bytes for every file under ``root``, ignoring bytecode caches."""
+    out: dict[str, bytes] = {}
+    for p in root.rglob("*"):
+        if p.is_file() and "__pycache__" not in p.parts:
+            out[str(p.relative_to(root))] = p.read_bytes()
+    return out
+
+
+def _load_sync_script():
+    path = HA_PKG / "scripts" / "sync_vendor.py"
+    spec = importlib.util.spec_from_file_location("ratebook_sync_vendor", path)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def test_vendor_in_sync(tmp_path: Path) -> None:
+    """The committed vendor/ tree must be exactly what sync_vendor.py regenerates from source."""
+    _load_sync_script().build_vendor(tmp_path / "vendor")
+    assert _tree(tmp_path / "vendor") == _tree(VENDOR), (
+        "vendor/ is stale — run: python3 packages/ratebook-homeassistant/scripts/sync_vendor.py"
+    )
+
+
+def test_vendored_integration_imports_and_prices() -> None:
+    """The vendored engine+adapter import and price a tariff with no external dependency."""
+    sys.path.insert(0, str(INTEGRATION))
+    try:
+        from vendor.ratebook_ha import pricing  # type: ignore[import-not-found]
+
+        names = pricing.list_bundled()
+        assert names, "no bundled tariffs vendored"
+        price = pricing.current_price(pricing.load_bundled(names[0]), datetime(2026, 6, 1, 18, 0))
+        assert isinstance(price, float)
+    finally:
+        sys.path.remove(str(INTEGRATION))
+        for name in [m for m in sys.modules if m == "vendor" or m.startswith("vendor.")]:
+            del sys.modules[name]

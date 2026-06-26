@@ -7,6 +7,6 @@
   "integration_type": "service",
   "iot_class": "calculated",
   "issue_tracker": "https://github.com/cbetz/ratebook/issues",
-  "requirements": ["ratebook-ha==0.0.1"],
+  "requirements": [],
   "version": "0.0.1"
 }
