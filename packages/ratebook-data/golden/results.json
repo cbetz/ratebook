@@ -1,0 +1,254 @@
+[
+  {
+    "label": "69d92c23ac3477692606714c",
+    "utility": "Pacific Gas & Electric Co",
+    "plan_name": "E-1 Residential Baseline",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "matches",
+      "verdict": "pass"
+    }
+  },
+  {
+    "label": "69de73e26d1ebb0263094f0c",
+    "utility": "Pacific Gas & Electric Co",
+    "plan_name": "E-TOU-C Residential TOU",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "matches",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "69e65026bc32447e430e25a9",
+    "utility": "PECO Energy Co",
+    "plan_name": "Residential Service (R)",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "distribution_only_vs_bundled",
+      "verdict": "pass"
+    }
+  },
+  {
+    "label": "69e65a18805b2131910774d9",
+    "utility": "PECO Energy Co",
+    "plan_name": "Residential Service (R) - TOU",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": false,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "distribution_only_vs_bundled",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "679c05efaddfd4b96500e1d4",
+    "utility": "Commonwealth Edison Co",
+    "plan_name": "BES Residential",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "distribution_only_vs_bundled",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "69e681d00b9e1bb34f0912d9",
+    "utility": "DTE Electric",
+    "plan_name": "Residential D1 Full Service",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": false,
+      "arithmetic_consistent": true,
+      "rate_relationship": "distribution_only_vs_bundled",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "6998c205a746c90e550cb23f",
+    "utility": "Duke Energy Carolinas, LLC",
+    "plan_name": "RS Residential",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "matches",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "69c1a32d79e080761e08539c",
+    "utility": "Duke Energy Indiana Inc",
+    "plan_name": "RS Residential",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "matches",
+      "verdict": "pass"
+    }
+  },
+  {
+    "label": "69deb3d8e547dde41109ee02",
+    "utility": "Alabama Power Co",
+    "plan_name": "Family Dwelling Service",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": false,
+      "arithmetic_consistent": true,
+      "rate_relationship": "diverges",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "69a706ab7da20ea6b00d0238",
+    "utility": "Arizona Public Service Co",
+    "plan_name": "R-TOU-E 4-7pm",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "matches",
+      "verdict": "pass"
+    }
+  },
+  {
+    "label": "69a1b8bf40140c3bb007f1bd",
+    "utility": "Salt River Project",
+    "plan_name": "E-23 Basic",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "matches",
+      "verdict": "pass"
+    }
+  },
+  {
+    "label": "6997c46543b6aa9b2a015f78",
+    "utility": "Virginia Electric & Power Co",
+    "plan_name": "Residential Schedule 1",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "distribution_only_vs_bundled",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "69eb933dd52ff0b5930ddce2",
+    "utility": "Los Angeles Department of Water and Power",
+    "plan_name": "Residential R1A Zone 1",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "distribution_only_vs_bundled",
+      "verdict": "pass"
+    }
+  },
+  {
+    "label": "6969340fd06d027d0c0c65bc",
+    "utility": "Connecticut Light & Power Co",
+    "plan_name": "Rate 1 Residential",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "diverges",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "68b399e19d10ce4ee705c572",
+    "utility": "Potomac Electric Power Co",
+    "plan_name": "Residential Schedule R",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": false,
+      "arithmetic_consistent": true,
+      "rate_relationship": "diverges",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "69ea606ff253a30c3f0075ee",
+    "utility": "Nevada Power Co",
+    "plan_name": "ORS-TOU",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": false,
+      "arithmetic_consistent": true,
+      "rate_relationship": "matches",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "685c51a57ab730a74905690c",
+    "utility": "PacifiCorp (Utah)",
+    "plan_name": "Schedule 1 Residential",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": false,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "distribution_only_vs_bundled",
+      "verdict": "pass-with-notes"
+    }
+  },
+  {
+    "label": "6859a625ee417fe3fa0cb0df",
+    "utility": "Wisconsin Electric Power Co",
+    "plan_name": "Residential Rg 1",
+    "grade": {
+      "sector_match": true,
+      "tiered_match": true,
+      "tou_match": true,
+      "fixed_charge_match": true,
+      "arithmetic_consistent": true,
+      "rate_relationship": "matches",
+      "verdict": "pass"
+    }
+  }
+]

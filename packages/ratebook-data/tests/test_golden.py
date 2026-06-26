@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from ratebook_data.golden import build_scorecard, render_scorecard_md
+from ratebook_data.golden import build_scorecard, load_results, render_scorecard_md
 
 SAMPLE = [
     {
@@ -56,3 +56,17 @@ def test_render_scorecard_markdown() -> None:
     assert "Graded **2** golden pairs of 3 selected" in md
     assert "PECO Energy Co" in md
     assert "distribution_only_vs_bundled" in md
+
+
+def test_committed_results_reproduce_documented_scorecard() -> None:
+    """The numbers published in docs/GOLDEN_SET.md must derive from the committed results.json."""
+    sc = build_scorecard(load_results())
+    assert sc.n == 18  # 18 of 20 pairs graded (2 link-rot)
+    assert sc.arithmetic_pass_rate == 1.0
+    assert round(sc.field_accuracy["sector_match"] * 100) == 100
+    assert round(sc.field_accuracy["tiered_match"] * 100) == 100
+    assert round(sc.field_accuracy["tou_match"] * 100) == 89
+    assert round(sc.field_accuracy["fixed_charge_match"] * 100) == 78
+    assert round(sc.overall_field_accuracy * 100) == 92
+    assert sc.verdicts == {"pass": 7, "pass-with-notes": 11}
+    assert sc.rate_relationships == {"matches": 8, "distribution_only_vs_bundled": 7, "diverges": 3}

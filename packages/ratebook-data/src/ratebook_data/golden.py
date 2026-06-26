@@ -14,10 +14,25 @@ The grade record per pair is expected to carry: ``sector_match``, ``tiered_match
 
 from __future__ import annotations
 
+import json
 from collections import Counter
 from dataclasses import dataclass
+from pathlib import Path
 
 STRUCTURAL_FIELDS = ("sector_match", "tiered_match", "tou_match", "fixed_charge_match")
+
+# The golden set's data dir (manifest + recorded results) sits at the package root, alongside src/.
+GOLDEN_DIR = Path(__file__).resolve().parents[2] / "golden"
+
+
+def load_results(path: Path | None = None) -> list[dict]:
+    """Load the recorded per-pair graded results — the committed data behind docs/GOLDEN_SET.md.
+
+    These are the grades from the eval run over snapshot ``usurdb-2026-06-13``. ``build_scorecard``
+    aggregates them into the published scorecard; re-running extraction live (with the ``extract``
+    extra) regenerates them. Returns the parsed list of ``{utility, plan_name, grade: {...}}``.
+    """
+    return json.loads((path or (GOLDEN_DIR / "results.json")).read_text())
 
 
 @dataclass(frozen=True)

@@ -5,14 +5,15 @@ their source tariff PDFs. Each PDF was extracted by a Claude structured-output p
 result graded against the URDB record. This is the per-utility accuracy scorecard the project
 publishes as content.
 
-> **Provenance / reproducibility (read this first).** The numbers below are a **manually
-> recorded snapshot** from a one-time eval run over the `usurdb-2026-06-13` snapshot. The
-> per-pair graded-results JSON is **not yet committed**, so this scorecard does **not** currently
-> regenerate from the repo with a single command — `ratebook_data.golden.render_scorecard_md`
-> renders a scorecard *from* a results list, but that list isn't checked in, and the extractor
-> needs the `anthropic` extra to reproduce. Wiring this into a reproducible, committed eval run
-> is a tracked roadmap item. Treat the figures as a recorded result, not an automated CI metric,
-> until then.
+> **Provenance / reproducibility (read this first).** The numbers below come from an eval run
+> over the `usurdb-2026-06-13` snapshot, and the per-pair graded results are committed at
+> `packages/ratebook-data/golden/results.json`. The aggregate table regenerates from that data —
+> run `uv run ratebook-data scorecard` — and a test
+> (`test_committed_results_reproduce_documented_scorecard`) asserts the headline figures here
+> match the committed results, so they can't silently drift. What is **not** yet a one-command
+> step is re-running the *extraction* from the source PDFs (that needs the `extract` extra +
+> network); regenerating the recorded grades live is the remaining roadmap item. Treat the
+> figures as a committed, test-checked recorded result.
 
 **Graded 18 of 20 selected pairs** — 2 unfetchable (LIPA 403, AEP Ohio 404; link rot). 0
 extraction failures.
@@ -103,10 +104,12 @@ exists to fix.
 `packages/ratebook-data/golden/manifest.json` defines the pairs (label → source URL + URDB ground truth).
 A one-time eval run extracted each PDF with `ratebook_data.extract` and recorded a structured
 grade per pair (`sector_match`, `tiered_match`, `tou_match`, `fixed_charge_match`,
-`arithmetic_consistent`, `rate_relationship`, `verdict`); `ratebook_data.golden.build_scorecard`
-/ `render_scorecard_md` aggregate those grades into the headline table above. PDFs are not
-committed (re-fetchable utility documents).
+`arithmetic_consistent`, `rate_relationship`, `verdict`). Those grades are committed at
+`packages/ratebook-data/golden/results.json`; `ratebook_data.golden.build_scorecard` /
+`render_scorecard_md` aggregate them into the headline table (run `uv run ratebook-data
+scorecard`). PDFs are not committed (re-fetchable utility documents).
 
-**To make this a real freshness signal**, the per-pair graded results must be committed and a
-single entrypoint must regenerate this file on any monthly snapshot — that's a tracked roadmap
-item. Until then, this page is a recorded snapshot, not an automated metric.
+**Remaining for a live freshness signal:** re-running the *extraction* from source PDFs on each
+monthly snapshot (the `extract` extra + network) to regenerate `results.json` automatically — a
+tracked roadmap item. The aggregate scorecard itself is already reproducible and test-checked
+from the committed grades.

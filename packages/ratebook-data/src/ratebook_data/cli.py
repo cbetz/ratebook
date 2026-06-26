@@ -35,6 +35,11 @@ def _build_parser() -> argparse.ArgumentParser:
         action="store_true",
         help="Re-download even if today's snapshot already exists.",
     )
+
+    sub.add_parser(
+        "scorecard",
+        help="Render the golden-set accuracy scorecard from the recorded results.",
+    )
     return parser
 
 
@@ -57,4 +62,8 @@ def main(argv: list[str] | None = None) -> int:
             f"loaded {loaded.row_count:,} rows x {loaded.column_count} columns "
             f"into {loaded.table} ({loaded.db_path})"
         )
+    elif args.command == "scorecard":
+        from ratebook_data.golden import load_results, render_scorecard_md
+
+        print(render_scorecard_md(load_results(), snapshot="usurdb-2026-06-13", n_total=20), end="")
     return 0

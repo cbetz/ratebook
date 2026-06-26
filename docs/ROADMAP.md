@@ -36,9 +36,10 @@ deliberately kept out of the public repo.
 - [x] Name/availability — PyPI `ratebook`/`ratebook-data`/`ratebook-mcp` and npm
   `ratebook`/`ratebook-mcp` are free; `.com`/`.org` are taken. Always pair the name with an
   energy qualifier in copy.
-- [ ] Make the golden-set scorecard reproducible from the repo (commit the per-pair graded
-  results + a single entrypoint) so `docs/GOLDEN_SET.md` regenerates instead of being a
-  hand-recorded snapshot.
+- [x] Golden-set scorecard reproducible from the repo — **done:** per-pair grades committed
+  (`packages/ratebook-data/golden/results.json`), aggregate regenerates via `uv run ratebook-data
+  scorecard`, and a test asserts the published numbers match. Remaining: re-run the *extraction*
+  from source PDFs live each snapshot (the `extract` extra) to regenerate the grades automatically.
 - [ ] Schema governance: how community tariff corrections flow into golden sets (the
   `tariff-correction` issue form → a diff + a golden-set addition).
 
@@ -121,7 +122,8 @@ deliberately kept out of the public repo.
 
 1. Wire generation/transmission/rider sourcing so bill-match works from utility data alone, not
    the bill's own printed components.
-2. Make the golden scorecard reproducible (commit graded results + one entrypoint).
+2. Regenerate the golden grades live (re-run extraction from source PDFs each snapshot); the
+   aggregate scorecard is already reproducible + test-checked from the committed grades.
 3. Crawler + change detection + monthly versioned releases on the top utilities.
 4. HACS distribution: move the integration to a root-level `custom_components/` (likely a
    dedicated `ratebook-homeassistant` repo) so HACS custom-repo install + the brands PR work.
