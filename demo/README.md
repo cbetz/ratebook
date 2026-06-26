@@ -8,10 +8,9 @@ Open `demo.html` in a browser (or serve the folder: `python3 -m http.server -d d
 visit http://localhost:8753/demo.html).
 
 `ratebook-engine.js` is a bundled build of the TS engine (includes [decimal.js](https://github.com/MikeMcl/decimal.js), MIT).
-Regenerate it from source with:
+Regenerate it from source (esbuild is a devDependency of `@ratebook/engine`):
 
 ```sh
-packages/ratebook-ts/node_modules/.bin/esbuild packages/ratebook-ts/src/index.ts \
-  --bundle --format=iife --global-name=RatebookEngine --minify \
-  --outfile=demo/ratebook-engine.js
+pnpm -C packages/ratebook-ts install
+pnpm -C packages/ratebook-ts run build:demo
 ```

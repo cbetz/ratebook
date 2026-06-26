@@ -47,7 +47,7 @@ tariff = Tariff(
 )
 
 bill = estimate_bill(tariff, Usage.aggregate(1244), BillingWindow(date(2026, 4, 28), 30))
-print(bill.ok, bill.total)   # True 139.13344  →  1244 kWh × $0.10276 + $11.30
+print(f"ok={bill.ok}  total=${bill.total}")   # ok=True  total=$139.13344  →  1244 kWh × $0.10276 + $11.30
 ```
 
 Real tariffs round-trip through JSON via `Tariff.from_json(...)`. To work with corpus data, load
@@ -74,7 +74,9 @@ pnpm -C packages/ratebook-ts install && pnpm -C packages/ratebook-ts test   # TS
 ```
 
 PySAM cross-validation and the MCP tool tests require optional extras / the built corpus and skip
-otherwise; `uv sync --group validation` installs the PySAM oracle. The two engines must never
+otherwise; run them locally with `uv sync --group validation` (the PySAM oracle) plus a built
+corpus. Hosted CI runs the default suite, so the PySAM cross-validation is a local check, not part
+of the CI matrix. The two engines must never
 diverge: both reproduce `packages/ratebook/tests/vectors/v0_bills.json` byte-for-byte. Regenerate
 it with `uv run python packages/ratebook/tests/generate_vectors.py`.
 

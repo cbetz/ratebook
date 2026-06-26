@@ -80,8 +80,10 @@ deliberately kept out of the public repo.
   graded results into a scorecard. **Snapshot result (`usurdb-2026-06-13`): 92% overall
   structural, 0 extraction failures**, with the notable pattern that every fixed-charge
   disagreement is the fresh extraction being current and the URDB record being stale/mislinked.
-  ⚠️ This scorecard is a **manually recorded snapshot** — the per-pair results JSON is not yet
-  committed, so it does not regenerate from the repo (see Open decisions). Details:
+  The per-pair grades are committed (`packages/ratebook-data/golden/results.json`): the aggregate
+  regenerates via `uv run ratebook-data scorecard`, and `test_committed_results_reproduce_documented_scorecard`
+  pins the published numbers so they can't drift. Still open: re-running the *extraction* from
+  source PDFs each snapshot (the `extract` extra) to regenerate the grades live. Details:
   `docs/GOLDEN_SET.md`.
 
 - **PECO extraction + bill-match.** `ratebook_data.extract` is a two-step pipeline: a Claude
