@@ -8,6 +8,7 @@ uses Decimal; the gap is float noise, not a modeling difference).
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 
 import pytest
@@ -15,10 +16,11 @@ import pytest
 pytest.importorskip("PySAM", reason="nrel-pysam not installed (uv sync --group validation)")
 
 from pysam_oracle import PYSAM_YEAR, run_pysam, shaped_load_8760
-from ratebook import estimate_annual, supported
-from ratebook_data.corpus import load_tariff
+from ratebook import Tariff, estimate_annual, supported
 
-DB = Path("data/ratebook.duckdb")
+# The validation tariffs are committed as JSON fixtures (generated from the URDB corpus via
+# corpus.load_tariff), so this cross-validation runs in CI without building the full corpus.
+FIXTURES = Path(__file__).parent / "fixtures" / "tariffs"
 
 # Real URDB residential tariffs spanning every structure class the v0 engine supports.
 # (label, description) — verified fully-supported and $/month-fixed during corpus scan.
@@ -41,10 +43,9 @@ def load() -> list[float]:
     return shaped_load_8760()
 
 
-@pytest.mark.skipif(not DB.exists(), reason="corpus DB not built (run: uv run ratebook-data urdb)")
 @pytest.mark.parametrize("label,description", CASES, ids=[c[1] for c in CASES])
 def test_engine_matches_pysam(label: str, description: str, load: list[float]) -> None:
-    tariff = load_tariff(label, DB)
+    tariff = Tariff.from_json(json.loads((FIXTURES / f"{label}.json").read_text()))
     assert supported(tariff).fully_supported, f"{description} is not fully supported"
 
     annual = estimate_annual(tariff, load, PYSAM_YEAR)

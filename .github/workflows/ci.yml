@@ -20,8 +20,8 @@ jobs:
       - name: Install uv
         uses: astral-sh/setup-uv@v3
 
-      - name: Sync workspace
-        run: uv sync
+      - name: Sync workspace (incl. the PySAM validation oracle)
+        run: uv sync --group validation
 
       - name: Ruff
         run: uv run ruff check .

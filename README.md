@@ -73,10 +73,9 @@ uv run ratebook-mcp                # run the MCP server (stdio)
 pnpm -C packages/ratebook-ts install && pnpm -C packages/ratebook-ts test   # TS engine + vectors
 ```
 
-PySAM cross-validation and the MCP tool tests require optional extras / the built corpus and skip
-otherwise; run them locally with `uv sync --group validation` (the PySAM oracle) plus a built
-corpus. Hosted CI runs the default suite, so the PySAM cross-validation is a local check, not part
-of the CI matrix. The two engines must never
+The PySAM cross-validation runs in CI against committed tariff fixtures (`uv sync --group
+validation` installs the oracle). The MCP tool tests additionally need the built corpus and run
+locally (`uv run ratebook-data urdb`); they skip otherwise. The two engines must never
 diverge: both reproduce `packages/ratebook/tests/vectors/v0_bills.json` byte-for-byte. Regenerate
 it with `uv run python packages/ratebook/tests/generate_vectors.py`.
 
