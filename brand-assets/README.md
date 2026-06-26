@@ -12,16 +12,15 @@ rsvg-convert -h 512 logo.svg -o logo@2x.png
 > These are a **starter** design (lightning-bolt mark in the Ratebook blue). Refine before
 > submitting upstream if you want a different look.
 
-## `home-assistant/brands` PR (lists the integration's icon in HA + the HACS scoreboard)
+## How the icon reaches Home Assistant (in-integration, HA 2026.3+)
 
-1. Fork [home-assistant/brands](https://github.com/home-assistant/brands).
-2. Add under `custom_integrations/ratebook/`:
-   - `icon.png` (256×256) and `icon@2x.png` (512×512) — **required**
-   - `logo.png` / `logo@2x.png` — optional wordmark (the brands CI may ask you to trim width)
-3. The folder name must equal the integration `domain`: **`ratebook`**.
-4. Open the PR; brands CI checks dimensions, format, and transparency.
+`home-assistant/brands` **no longer accepts custom-integration icon PRs** (the bot auto-closes
+them — confirmed 2026-06-26). Since HA 2026.3.0, a custom integration ships its own brand images
+from a `brand/` folder, which take priority over the brands CDN — no upstream PR, no manifest
+change. See https://developers.home-assistant.io/blog/2026/02/24/brands-proxy-api.
 
-Guidelines: https://github.com/home-assistant/brands#guidelines
-
-Until this merges, the integration still installs and works — the brand icon only affects the
-icon Home Assistant shows and the public install scoreboard at analytics.home-assistant.io.
+So the icon lives at `packages/ratebook-homeassistant/custom_components/ratebook/brand/`
+(`icon.png` 256×256, `icon@2x.png` 512×512) and is mirrored into the HACS distribution repo by
+`scripts/sync_dist_repo.sh`. To change the icon: edit `icon.svg`, re-rasterize (above), copy the
+PNGs into that `brand/` folder, then re-sync the dist repo. `logo.svg` is kept for reuse (README,
+social) but a wordmark logo isn't required for the in-integration icon.

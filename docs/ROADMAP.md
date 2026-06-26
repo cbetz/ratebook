@@ -129,5 +129,6 @@ deliberately kept out of the public repo.
 3. Crawler + change detection + monthly versioned releases on the top utilities.
 4. HACS distribution: **done** — the synced mirror repo
    [cbetz/ratebook-homeassistant](https://github.com/cbetz/ratebook-homeassistant) has the
-   root-level layout HACS needs (regenerate via `scripts/sync_dist_repo.sh`). Remaining: the
-   `home-assistant/brands` PR (icon in `brand-assets/`) and sending the evcc/EMHASS drafts.
+   root-level layout HACS needs (regenerate via `scripts/sync_dist_repo.sh`). The brand icon
+   ships in-integration (`custom_components/ratebook/brand/`) — HA 2026.3+ no longer uses the
+   brands repo for custom integrations. Remaining: send the evcc/EMHASS integration drafts.
