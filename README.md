@@ -9,7 +9,9 @@ can answer "what will this kWh cost me, and when should I charge?"
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](https://www.python.org/)
 [![CI](https://github.com/cbetz/ratebook/actions/workflows/ci.yml/badge.svg)](https://github.com/cbetz/ratebook/actions/workflows/ci.yml)
 
-![Ratebook: price a tariff with the engine, and the LLM-extraction accuracy scorecard](docs/quickstart.svg)
+![Ratebook demo — estimate a monthly bill, and see how charging an EV off-peak is ~23% cheaper, computed live by the engine](demo/ratebook-demo.gif)
+
+<sub>↑ The real engine running in the browser. Try it yourself: [`demo/demo.html`](demo/demo.html).</sub>
 
 > **Status: pre-release.** What works today: a deterministic rate engine (Python + a TypeScript
 > port held to it byte-for-byte), cross-validated against NREL's PySAM and shown to reproduce a
