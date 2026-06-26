@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Deterministic US electricity tariff rate engine — TypeScript port, sharing JSON test vectors with the Python engine.",
   "type": "module",
+  "packageManager": "pnpm@10.14.0",
   "license": "Apache-2.0",
   "author": "Chris Betz (https://github.com/cbetz)",
   "homepage": "https://github.com/cbetz/ratebook#readme",
