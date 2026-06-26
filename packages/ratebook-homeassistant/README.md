@@ -22,6 +22,9 @@ Add via Settings → Devices & Services → Add Integration → Ratebook. Pick a
 tariff (a generic time-of-use or flat residential plan) or paste a Ratebook tariff JSON, then
 set the charge-window length (hours) and currency.
 
+A ready-made Lovelace dashboard (current price + hourly forecast chart + cheapest-charge-window)
+is in [`examples/dashboard.yaml`](examples/dashboard.yaml).
+
 ## Install
 
 The integration is self-contained: the `ratebook` engine and `ratebook_ha` adapter are vendored

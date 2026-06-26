@@ -1,0 +1,76 @@
+# Example Home Assistant dashboard for Ratebook
+#
+# A Lovelace view that shows the two Ratebook sensors: the current electricity price (with the
+# hourly forecast as a chart) and the cheapest upcoming charge window. Paste it into a dashboard
+# via Settings -> Dashboards -> (your dashboard) -> Edit -> Raw configuration editor, or add the
+# individual cards through the UI.
+#
+# The forecast chart uses the ApexCharts card (install "apexcharts-card" from HACS). A no-extras
+# fallback using only built-in cards is at the bottom.
+
+title: Energy
+views:
+  - title: Electricity
+    path: electricity
+    icon: mdi:transmission-tower
+    cards:
+      - type: markdown
+        content: >
+          ## ⚡ Ratebook — what your power costs
+
+      # Current marginal price + the cheapest charge window, at a glance.
+      - type: glance
+        title: Right now
+        entities:
+          - entity: sensor.ratebook_electricity_price
+            name: Price now
+          - entity: sensor.ratebook_cheapest_charge_window
+            name: Cheapest charge starts
+
+      - type: entities
+        title: Cheapest charge window (next 24h)
+        entities:
+          - entity: sensor.ratebook_cheapest_charge_window
+            name: Starts
+          - type: attribute
+            entity: sensor.ratebook_cheapest_charge_window
+            attribute: end
+            name: Ends
+          - type: attribute
+            entity: sensor.ratebook_cheapest_charge_window
+            attribute: avg_rate
+            name: Average rate ($/kWh)
+          - type: attribute
+            entity: sensor.ratebook_cheapest_charge_window
+            attribute: hours
+            name: Length (hours)
+
+      # Today's hourly price curve (peak hours stand out). Needs apexcharts-card from HACS.
+      - type: custom:apexcharts-card
+        header:
+          show: true
+          title: Today's electricity price ($/kWh)
+        graph_span: 24h
+        span:
+          start: day
+        series:
+          - entity: sensor.ratebook_electricity_price
+            name: Price
+            type: area
+            stroke_width: 2
+            data_generator: |
+              return (entity.attributes.today || []).map(p => [new Date(p.start).getTime(), p.price]);
+
+# ---------------------------------------------------------------------------------------------
+# No-extras fallback (built-in cards only, no HACS frontend cards): a gauge for the live price
+# plus the entities card above. Plotting the hourly forecast needs a charting card (ApexCharts).
+# ---------------------------------------------------------------------------------------------
+#  - type: gauge
+#    entity: sensor.ratebook_electricity_price
+#    name: Price now ($/kWh)
+#    min: 0
+#    max: 0.5
+#    severity:
+#      green: 0
+#      yellow: 0.18
+#      red: 0.30
