@@ -41,3 +41,28 @@ def test_flat_tariff_picks_earliest_window() -> None:
 def test_charge_hours_out_of_range_raises() -> None:
     with pytest.raises(ValueError, match="out of range"):
         cheapest_charge_window(peco_rate_r(), MONDAY, 25)
+
+
+def test_not_before_excludes_past_windows() -> None:
+    # Flat tariff: every block ties, so with no cutoff it picks 00:00 (the earliest). With a
+    # mid-morning cutoff the window must start at the next whole hour — never in the past.
+    cw = cheapest_charge_window(peco_rate_r(), MONDAY, 3, not_before=datetime(2025, 6, 2, 10, 30))
+    assert cw.start == datetime(2025, 6, 2, 11, 0)
+
+
+def test_not_before_before_window_start_is_noop() -> None:
+    cw = cheapest_charge_window(peco_rate_r(), MONDAY, 3, not_before=datetime(2025, 6, 1, 0, 0))
+    assert cw.start == datetime(2025, 6, 2, 0, 0)  # earliest — same as no cutoff
+
+
+def test_not_before_past_last_block_clamps_to_latest() -> None:
+    # 24h window, 3h block → latest start is 21:00; a cutoff beyond that returns the last block.
+    cw = cheapest_charge_window(peco_rate_r(), MONDAY, 3, not_before=datetime(2025, 6, 2, 23, 30))
+    assert cw.start == datetime(2025, 6, 2, 21, 0)
+
+
+def test_not_before_with_tou_picks_upcoming_offpeak() -> None:
+    # From noon, the cheapest upcoming 4h block is all off-peak (before the 4-8pm peak).
+    cw = cheapest_charge_window(tou_tariff(), MONDAY, 4, not_before=datetime(2025, 6, 2, 12, 0))
+    assert cw.start >= datetime(2025, 6, 2, 12, 0)
+    assert cw.avg_rate == Decimal("0.10")
