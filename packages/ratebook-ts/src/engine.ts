@@ -138,7 +138,8 @@ export class SupportReport {
 }
 
 // --- internals ---
-function periodAt(tariff: Tariff, day: Date, hour: number): number {
+/** Public: the energy period index a tariff assigns to (day, hour). Mirror of `period_at`. */
+export function periodAt(tariff: Tariff, day: Date, hour: number): number {
   return tariff.schedule.periodAt(dayTypeOf(day), day.getUTCMonth() + 1, hour);
 }
 
@@ -155,6 +156,83 @@ function periodActiveDays(tariff: Tariff, window: BillingWindow): Map<number, nu
   const out = new Map<number, number>();
   for (const [p, s] of seen) out.set(p, s.size);
   return out;
+}
+
+// --- charge-window optimization (mirror of ratebook.engine.cheapest_charge_window) ---
+function isoDateTime(d: Date): string {
+  const p = (n: number) => String(n).padStart(2, "0");
+  return `${d.getUTCFullYear()}-${p(d.getUTCMonth() + 1)}-${p(d.getUTCDate())}T${p(d.getUTCHours())}:00:00`;
+}
+
+/** Per-hour marginal energy price ($/kWh) over the window — the TOU "when to charge" signal. */
+export function hourlyMarginalPrices(tariff: Tariff, window: BillingWindow, tier = 0): Decimal[] {
+  const prices: Decimal[] = [];
+  for (const day of window.iterDays()) {
+    for (let hour = 0; hour < 24; hour++) {
+      const tiers = tariff.energy.periods[periodAt(tariff, day, hour)].tiers;
+      prices.push(tiers[Math.min(tier, tiers.length - 1)].effectiveRate);
+    }
+  }
+  return prices;
+}
+
+export class ChargeWindow {
+  constructor(
+    readonly start: Date,
+    readonly hours: number,
+    readonly avgRate: Decimal,
+    readonly hourlyRates: Decimal[],
+  ) {}
+  toJson() {
+    return {
+      start: isoDateTime(this.start),
+      hours: this.hours,
+      avg_rate: decimalToJson(this.avgRate),
+      hourly_rates: this.hourlyRates.map((r) => decimalToJson(r)),
+    };
+  }
+}
+
+/**
+ * Cheapest contiguous `chargeHours`-long block in the window to add load. Ties resolve to the
+ * earliest start. With `notBefore`, only blocks starting at/after it (rounded up to the next whole
+ * hour, clamped to the last fitting block) are considered — so a "charge next" caller never gets a
+ * window in the past. Mirror of the Python engine; held to it by shared JSON vectors.
+ */
+export function cheapestChargeWindow(
+  tariff: Tariff,
+  window: BillingWindow,
+  chargeHours: number,
+  opts: { tier?: number; notBefore?: Date | null } = {},
+): ChargeWindow {
+  const tier = opts.tier ?? 0;
+  const prices = hourlyMarginalPrices(tariff, window, tier);
+  if (chargeHours <= 0 || chargeHours > prices.length) {
+    throw new Error(`charge_hours ${chargeHours} out of range for a ${prices.length}-hour window`);
+  }
+  const lastStart = prices.length - chargeHours;
+  let firstStart = 0;
+  if (opts.notBefore != null) {
+    const offsetHours = (opts.notBefore.getTime() - window.start.getTime()) / 3_600_000;
+    firstStart = Math.min(Math.max(0, Math.ceil(offsetHours)), lastStart);
+  }
+  let bestStart = firstStart;
+  let bestSum: Decimal | null = null;
+  for (let i = firstStart; i <= lastStart; i++) {
+    let sum = ZERO;
+    for (let j = i; j < i + chargeHours; j++) sum = sum.plus(prices[j]);
+    if (bestSum === null || sum.lt(bestSum)) {
+      bestSum = sum;
+      bestStart = i;
+    }
+  }
+  const start = new Date(window.start.getTime() + bestStart * 3_600_000);
+  return new ChargeWindow(
+    start,
+    chargeHours,
+    bestSum!.div(chargeHours),
+    prices.slice(bestStart, bestStart + chargeHours),
+  );
 }
 
 function ladderKey(period: { tiers: { effectiveRate: Decimal; max: Decimal | null; maxUnit: string }[] }): string {
