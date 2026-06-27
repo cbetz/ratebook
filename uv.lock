@@ -687,12 +687,12 @@ wheels = [
 
 [[package]]
 name = "ratebook"
-version = "0.0.1"
+version = "0.1.0"
 source = { editable = "packages/ratebook" }
 
 [[package]]
 name = "ratebook-data"
-version = "0.0.1"
+version = "0.1.0"
 source = { editable = "packages/ratebook-data" }
 dependencies = [
     { name = "duckdb" },
@@ -718,7 +718,7 @@ provides-extras = ["extract"]
 
 [[package]]
 name = "ratebook-ha"
-version = "0.0.1"
+version = "0.1.0"
 source = { editable = "packages/ratebook-homeassistant" }
 dependencies = [
     { name = "ratebook" },
@@ -729,7 +729,7 @@ requires-dist = [{ name = "ratebook", editable = "packages/ratebook" }]
 
 [[package]]
 name = "ratebook-mcp"
-version = "0.0.1"
+version = "0.1.0"
 source = { editable = "packages/ratebook-mcp" }
 dependencies = [
     { name = "mcp" },

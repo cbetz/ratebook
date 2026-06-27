@@ -1,6 +1,6 @@
 [project]
 name = "ratebook-mcp"
-version = "0.0.1"
+version = "0.1.0"
 description = "MCP server exposing the Ratebook tariff database and rate engine to agents."
 readme = "README.md"
 license = "Apache-2.0"

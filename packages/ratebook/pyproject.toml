@@ -1,6 +1,6 @@
 [project]
 name = "ratebook"
-version = "0.0.1"
+version = "0.1.0"
 description = "Deterministic US electricity tariff rate engine: pure functions, property-tested."
 readme = "README.md"
 license = "Apache-2.0"

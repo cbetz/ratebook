@@ -5,4 +5,4 @@ Scaffold only — ships in Q2 2026 alongside the Home Assistant integration; all
 math is delegated to the ``ratebook`` engine.
 """
 
-__version__ = "0.0.1"
+__version__ = "0.1.0"

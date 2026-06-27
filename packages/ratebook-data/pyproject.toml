@@ -1,6 +1,6 @@
 [project]
 name = "ratebook-data"
-version = "0.0.1"
+version = "0.1.0"
 description = "Ratebook data plant: source ingestion (URDB, EIA), DuckDB warehouse, dataset releases."
 readme = "README.md"
 license = "Apache-2.0"

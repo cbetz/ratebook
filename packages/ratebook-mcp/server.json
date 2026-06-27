@@ -7,12 +7,12 @@
     "url": "https://github.com/cbetz/ratebook",
     "source": "github"
   },
-  "version": "0.0.1",
+  "version": "0.1.0",
   "packages": [
     {
       "registry_type": "pypi",
       "identifier": "ratebook-mcp",
-      "version": "0.0.1",
+      "version": "0.1.0",
       "transport": { "type": "stdio" }
     }
   ]

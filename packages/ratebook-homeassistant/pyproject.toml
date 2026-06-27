@@ -1,6 +1,6 @@
 [project]
 name = "ratebook-ha"
-version = "0.0.1"
+version = "0.1.0"
 description = "Home Assistant adapter for the Ratebook rate engine: tariff pricing, price schedule, and cheapest-charge-window helpers."
 readme = "README.md"
 license = "Apache-2.0"

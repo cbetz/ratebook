@@ -18,5 +18,5 @@ keywords:
   - mcp
   - home-assistant
 license: Apache-2.0
-version: 0.0.1
+version: 0.1.0
 # On the first tagged release, archive via Zenodo and add the minted DOI here as `doi:`.
