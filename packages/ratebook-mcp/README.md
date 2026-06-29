@@ -4,6 +4,9 @@ MCP server exposing the Ratebook tariff database and rate engine to apps, device
 It answers "what will this kWh cost me, and when should I charge?" over the loaded corpus
 (`data/ratebook.duckdb`) and the deterministic `ratebook` engine.
 
+<!-- MCP registry namespace-ownership marker (validated against this published README; do not remove) -->
+mcp-name: io.github.cbetz/ratebook
+
 ## Tools
 
 | Tool | What it does |
