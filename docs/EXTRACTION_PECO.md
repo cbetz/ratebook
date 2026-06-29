@@ -52,8 +52,9 @@ PECO Rate R, the actual filed tariff, prices the **distribution** component only
 URDB's record for the same plan carries a single bundled rate of `$0.21884/kWh`
 (`0.20513 + 0.01371`). At 600 kWh that is **$142.60**.
 
-The difference is **$69.65 — 48.8% of the bill** — and it is exactly the generation +
-transmission + riders that the rate sheet does not price. URDB's number is an all-in snapshot
+The difference is **$69.65 — the filed sheet sits 48.8% below URDB's bundled figure** — and that
+gap is exactly the generation + transmission + riders the rate sheet does not price (the actual
+bill below confirms the ~50/50 split directly). URDB's number is an all-in snapshot
 from some past quarter, with distribution, generation, and transmission summed into one figure
 that goes stale the moment PECO's quarterly Price to Compare changes. This is the "your app lied
 about my bill / riders live in prose" thesis, made concrete on a single real plan.
@@ -70,8 +71,8 @@ To reproduce a real PECO bill, you need four things, and the rate sheet is one:
 
 The schema captures this decomposition on purpose (`components_priced`,
 `components_referenced_only`, `riders`), so the engine prices what is on the sheet and the caller
-stays honest about what is still missing — rather than quietly serving a 49%-low number the way
-a single bundled rate would.
+stays honest about what is still missing — rather than collapsing the bill into one bundled
+number that hides which components (about half of it, here) are or aren't included.
 
 ## The validator earned its keep on day one
 

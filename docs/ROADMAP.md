@@ -95,7 +95,9 @@ deliberately kept out of the public repo.
   exclusive; the converter was summing them → added an `applies_to` qualifier + guard +
   regression test). **The finding:** a distribution rate sheet prices only ~half the bill; the
   generation ("Price to Compare") + transmission + riders live in separate documents. URDB's
-  bundled `$0.21884/kWh` would be ~49% high for this plan. See `docs/EXTRACTION_PECO.md`.
+  record for the same plan is one bundled `$0.21884/kWh` with no `servicetype` to separate
+  delivery from supply — close to the all-in rate here, but you can't see what's in it, or that
+  the supply half goes stale. See `docs/EXTRACTION_PECO.md`.
 
 - **Bill-match acceptance test.** Given the components of a real PECO bill (May 2026, 1,244 kWh,
   $276.35), the **engine reproduces the total to a fraction of a cent** (`test_billmatch_peco.py`)
