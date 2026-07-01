@@ -4,14 +4,14 @@
     "utility_id": "Public Service Co of Colorado",
     "eiaid": 15466,
     "jurisdiction": null,
-    "plan_code": "",
+    "plan_code": "RE-TOU",
     "plan_name": "Residential Energy Time Of Use (Schedule RE-TOU)",
     "sector": "residential",
-    "is_default_plan": null,
-    "tariff_type": "unknown"
+    "is_default_plan": true,
+    "tariff_type": "bundled"
   },
   "effective_range": {
-    "start": "2026-01-01",
+    "start": "2026-07-01",
     "end": null,
     "superseded_at": null,
     "scheduled_end": null
@@ -21,8 +21,8 @@
       {
         "tiers": [
           {
-            "rate": "0.32832",
-            "adj": "0",
+            "rate": "0.18331",
+            "adj": "0.12843",
             "max": null,
             "max_unit": "kWh",
             "sell": null
@@ -32,8 +32,8 @@
       {
         "tiers": [
           {
-            "rate": "0.12165",
-            "adj": "0",
+            "rate": "0.06792",
+            "adj": "0.04759",
             "max": null,
             "max_unit": "kWh",
             "sell": null
@@ -43,8 +43,8 @@
       {
         "tiers": [
           {
-            "rate": "0.38109",
-            "adj": "0",
+            "rate": "0.21277",
+            "adj": "0.14977",
             "max": null,
             "max_unit": "kWh",
             "sell": null
@@ -54,8 +54,8 @@
       {
         "tiers": [
           {
-            "rate": "0.13926",
-            "adj": "0",
+            "rate": "0.07884",
+            "adj": "0.05524",
             "max": null,
             "max_unit": "kWh",
             "sell": null
@@ -693,7 +693,21 @@
         1
       ]
     ],
-    "holiday_policy": "unknown"
+    "holiday_policy": "as_weekend",
+    "holidays": [
+      "new_years_day",
+      "mlk_day",
+      "washingtons_birthday",
+      "memorial_day",
+      "juneteenth",
+      "independence_day",
+      "labor_day",
+      "columbus_day",
+      "veterans_day",
+      "thanksgiving",
+      "christmas"
+    ],
+    "holiday_observance": "actual_day"
   },
   "fixed_charges": [
     {
@@ -704,11 +718,60 @@
   "min_charge": null,
   "unsupported": [],
   "metering": "net_metering",
-  "source_documents": [],
+  "source_documents": [
+    {
+      "url": "https://xcelnew.my.salesforce.com/sfc/p/#1U0000011ttV/a/R300000RlUER/5G4ru_.jqcaA1xENmOJaXHZ1xgEeRfm5coulNeJ2Wz4",
+      "role": "rate_sheet",
+      "source_type": "html_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.xcelenergy.com/company/rates_and_regulations/rates/rate_books",
+      "role": "verification",
+      "source_type": "html_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://puc.colorado.gov/time-of-use-rates",
+      "role": "verification",
+      "source_type": "html_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.xcelenergy.com/staticfiles/xe-responsive/Company/Rates%20&%20Regulations/Regulatory%20Filings/PSCo_Electric_Entire_Tariff.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    }
+  ],
   "provenance": {
     "urdb_label": "69bd927af5cd25efec0e9aad",
     "urdb_latest_update": "2026-03-20",
-    "last_verified": null,
+    "last_verified": "2026-07-01",
     "confidence": null,
     "snapshot_sha256": null
   }

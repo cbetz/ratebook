@@ -4,14 +4,14 @@
     "utility_id": "Arizona Public Service Co",
     "eiaid": 803,
     "jurisdiction": null,
-    "plan_code": "",
+    "plan_code": "TOU-E",
     "plan_name": "Time-of-Use 4pm-7pm Weekdays (R-TOU-E)",
     "sector": "residential",
     "is_default_plan": null,
-    "tariff_type": "unknown"
+    "tariff_type": "bundled"
   },
   "effective_range": {
-    "start": "2026-02-01",
+    "start": "2026-06-01",
     "end": null,
     "superseded_at": null,
     "scheduled_end": null
@@ -22,7 +22,7 @@
         "tiers": [
           {
             "rate": "0.12345",
-            "adj": "0.029831",
+            "adj": "0.033243",
             "max": null,
             "max_unit": "kWh",
             "sell": null
@@ -33,7 +33,7 @@
         "tiers": [
           {
             "rate": "0.34396",
-            "adj": "0.029831",
+            "adj": "0.033243",
             "max": null,
             "max_unit": "kWh",
             "sell": null
@@ -44,7 +44,7 @@
         "tiers": [
           {
             "rate": "0.12351",
-            "adj": "0.029831",
+            "adj": "0.033243",
             "max": null,
             "max_unit": "kWh",
             "sell": null
@@ -55,7 +55,7 @@
         "tiers": [
           {
             "rate": "0.03495",
-            "adj": "0.029831",
+            "adj": "0.033243",
             "max": null,
             "max_unit": "kWh",
             "sell": null
@@ -66,7 +66,7 @@
         "tiers": [
           {
             "rate": "0.32543",
-            "adj": "0.029831",
+            "adj": "0.033243",
             "max": null,
             "max_unit": "kWh",
             "sell": null
@@ -704,7 +704,21 @@
         2
       ]
     ],
-    "holiday_policy": "unknown"
+    "holiday_policy": "as_weekend",
+    "holidays": [
+      "new_years_day",
+      "mlk_day",
+      "washingtons_birthday",
+      "memorial_day",
+      "juneteenth",
+      "independence_day",
+      "labor_day",
+      "columbus_day",
+      "veterans_day",
+      "thanksgiving",
+      "christmas"
+    ],
+    "holiday_observance": "actual_day"
   },
   "fixed_charges": [
     {
@@ -715,11 +729,132 @@
   "min_charge": null,
   "unsupported": [],
   "metering": "net_billing",
-  "source_documents": [],
+  "source_documents": [
+    {
+      "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Service-Plans/Time-of-Use-4pm-7pmWeekdays_R-TOU-E.pdf",
+      "role": "rate_sheet",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Adjustors/PSA1_PowerSupplyAdjustment.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Adjustors/TCA_TransmissionCostAdjustment.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Adjustors/REAC-1_RenewableEnergyStandard.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Adjustors/DSMAC_DemandSideManagementCharge.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Adjustors/LFCR_LostFixedCostRecoveryMechanism.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Adjustors/CRS-1.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Adjustors/TEAM_TaxExpenseAdjustorMechanism.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Business/Adjustors/SRB-1.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.aps.com/en/Utility/Regulatory-and-Legal/Rates-Schedules-and-Adjustors",
+      "role": "verification",
+      "source_type": "html_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    }
+  ],
   "provenance": {
     "urdb_label": "69a706ab7da20ea6b00d0238",
     "urdb_latest_update": "2026-03-03",
-    "last_verified": null,
+    "last_verified": "2026-07-01",
     "confidence": null,
     "snapshot_sha256": null
   }

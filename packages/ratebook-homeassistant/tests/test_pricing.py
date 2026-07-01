@@ -70,3 +70,57 @@ def test_emhass_cost_forecast_current_first() -> None:
     assert len(prices) == 6
     assert prices[0] == 0.30  # 18:00 peak (current period first)
     assert prices[3] == 0.12  # 21:00 back to off-peak
+
+
+def test_bundled_index_has_labels_for_every_tariff() -> None:
+    index = pricing.bundled_index()
+    assert {e["slug"] for e in index} == set(pricing.list_bundled())
+    labels = {e["slug"]: e["label"] for e in index}
+    # Real utilities carry human dropdown labels, not raw slugs.
+    assert labels["pge-e-1"].startswith("PG&E")
+    assert "(CA)" in labels["pge-e-1"]
+    # Sorted by label.
+    assert [e["label"] for e in index] == sorted((e["label"] for e in index), key=str.lower)
+
+
+def test_index_json_is_not_listed_as_a_tariff() -> None:
+    assert "index" not in pricing.list_bundled()
+
+
+def test_tier_changes_marginal_price_on_tiered_plans() -> None:
+    pge = pricing.load_bundled("pge-e-1")
+    noon = datetime(2025, 6, 2, 12)
+    assert pricing.current_price(pge, noon, tier=0) == 0.32561
+    assert pricing.current_price(pge, noon, tier=1) == 0.40702
+    # Tier index clamps to the ladder length rather than raising.
+    assert pricing.current_price(pge, noon, tier=9) == 0.40702
+    # Schedules and windows honor the tier too.
+    assert pricing.hourly_schedule(pge, MONDAY, tier=1)[0]["price"] == 0.40702
+    win = pricing.cheapest_window(pge, MONDAY, days=1, charge_hours=4, tier=1)
+    assert win["avg_rate"] == 0.40702
+
+
+def test_nordpool_schedule_shape() -> None:
+    tou = pricing.load_bundled("generic-tou")
+    raw = pricing.nordpool_schedule(tou, MONDAY)
+    assert len(raw) == 24
+    assert raw[18] == {
+        "start": "2025-06-02T18:00:00",
+        "end": "2025-06-02T19:00:00",
+        "value": 0.30,
+    }
+
+
+def test_is_holiday_requires_policy_and_dates() -> None:
+    # The generic example tariff carries no holiday rule (holiday_policy unknown), so it is
+    # never holiday-typed; audited TOU plans (e.g. peco-rate-r-tou) enumerate theirs.
+    tou = pricing.load_bundled("generic-tou")
+    assert pricing.is_holiday(tou, date(2025, 9, 1)) is False  # Labor Day 2025
+    holiday_json = tou.to_json()
+    holiday_json["schedule"]["holiday_policy"] = "as_weekend"
+    holiday_json["schedule"]["holidays"] = ["labor_day"]
+    t = pricing.load_tariff(holiday_json)
+    assert pricing.is_holiday(t, date(2025, 9, 1)) is True
+    assert pricing.is_holiday(t, date(2025, 9, 2)) is False
+    # And the price on the holiday follows the weekend schedule (all off-peak).
+    assert pricing.current_price(t, datetime(2025, 9, 1, 18)) == 0.12

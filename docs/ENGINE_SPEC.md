@@ -83,15 +83,19 @@ v8 nested JSON). PySAM is a **test-only** dependency, never imported by the engi
 Enums (`StrEnum`, closed + `UNKNOWN` where corpus data is dirty): `FixedChargeUnit`
 {$/month,$/day}, `MinChargeUnit` {$/month,$/day,$/year}, `TierMaxUnit` {kWh, kWh daily,
 kWh/kW, kWh/kVA, kWh/hp, kWh/kW daily}, `DayType` {weekday,weekend}, `HolidayPolicy`
-{unknown,as_weekend,as_weekday}, `Sector`, `MeteringOption`, `TariffType`
-{bundled,delivery_only,supply_only,unknown}, `SourceType`, `UnsupportedKind`.
+{unknown,as_weekend,as_weekday}, `Holiday` (12 named US holidays: fixed-date + floating
+rules), `HolidayObservance` {sunday_to_monday,actual_day}, `Sector`, `MeteringOption`,
+`TariffType` {bundled,delivery_only,supply_only,unknown}, `SourceType`, `UnsupportedKind`.
 
 Priced core (mirrors `ur_ec_tou_mat` row `[period, tier, max, units, buy_rate, sell_rate]`):
 `EnergyTier(rate, adj=0, max=None, max_unit=kWh, sell=None)` — effective rate = `rate+adj`;
 `max=None` only on the final (open) tier; `sell` carried, not priced. `EnergyPeriod(tiers)`
 — tuple index = the period id the schedules reference. `EnergyRateStructure(periods)`.
-`Schedule(weekday, weekend, holiday_policy)` — each matrix exactly 12×24 ints (validated at
-construction). `FixedCharge(amount, unit)` (amount may be negative). `MinCharge(amount, unit)`.
+`Schedule(weekday, weekend, holiday_policy, holidays, holiday_observance)` — each matrix
+exactly 12×24 ints (validated at construction); `holidays` is the tuple of named holidays the
+rate sheet enumerates (unique, JSON-emitted only when non-empty so pre-holiday tariffs
+round-trip byte-identically). `FixedCharge(amount, unit)` (amount may be negative).
+`MinCharge(amount, unit)`.
 
 Carried-but-unpriced: `UnsupportedFeature(kind, detail)`. Identity/provenance:
 `TariffIdentity`, `EffectiveRange(start,end,superseded_at,scheduled_end)` (start≤end),
@@ -120,9 +124,17 @@ line_items, window, warnings, refusal)`. `LineItem(period, tier, kwh, rate, subt
    *used* period has a demand-normalized `TierMaxUnit`; if `$/year` min in a single window.
    (Sell/NEM → warning, not refusal — decision 8.)
 2. **Map usage → per-period kWh.** Hourly: for each hour, `day_type` from `date.weekday()`
-   (Mon–Fri weekday, Sat/Sun weekend), `period = schedule[day_type][month-1][hour]`,
-   accumulate. Aggregate: compute the set of periods the schedule touches over the window's
-   date span; size 1 → assign all `total_kwh` to it; size > 1 → `Refusal(aggregate_usage_multi_period)`.
+   (Mon–Fri weekday, Sat/Sun weekend) — except that with `holiday_policy=as_weekend` and a
+   non-empty `holidays` list, a day in `holiday_dates(year, holidays, observance)` prices on
+   the weekend schedule (`as_weekend` with an EMPTY list is inert and adds a
+   `holidays_not_enumerated` warning; `as_weekday`/`unknown` use the real day type). Then
+   `period = schedule[day_type][month-1][hour]`, accumulate. Aggregate: compute the set of
+   periods the schedule touches over the window's date span; size 1 → assign all `total_kwh`
+   to it; size > 1 → `Refusal(aggregate_usage_multi_period)`. Holiday date rules: fixed dates
+   (Jan 1, Jun 19, Jul 4, Nov 11, Dec 25) + floating (MLK 3rd Mon Jan, Washington's 3rd Mon
+   Feb, Memorial last Mon May, Labor 1st Mon Sep, Columbus 2nd Mon Oct, Thanksgiving 4th Thu
+   Nov + day after); `sunday_to_monday` observance also marks the Monday after a Sunday
+   holiday (the prevailing utility rule).
 3. **Tiers per period** (decision 6): walk each period's ladder; tier `i` covers cumulative
    in-period usage from `tier[i-1].max` to `tier[i].max` at `rate+adj`; final tier open (a
    finite max on the final tier is treated as open per URDB/PySAM convention, with a

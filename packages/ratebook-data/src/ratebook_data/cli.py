@@ -15,9 +15,7 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
-    urdb_parser = sub.add_parser(
-        "urdb", help="Download the URDB bulk CSV and load it into DuckDB."
-    )
+    urdb_parser = sub.add_parser("urdb", help="Download the URDB bulk CSV and load it into DuckDB.")
     urdb_parser.add_argument(
         "--raw-dir",
         type=Path,
@@ -49,8 +47,7 @@ def main(argv: list[str] | None = None) -> int:
         download = urdb.download_urdb(args.raw_dir, force=args.force)
         verb = "reused existing" if download.reused else "downloaded"
         print(
-            f"{verb} {download.path} "
-            f"({download.size_bytes:,} bytes, sha256={download.sha256[:12]})"
+            f"{verb} {download.path} ({download.size_bytes:,} bytes, sha256={download.sha256[:12]})"
         )
 
         if download.meta_path.exists():

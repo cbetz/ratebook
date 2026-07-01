@@ -8,11 +8,11 @@
     "plan_name": "R-4 Residential Time-of-Use",
     "sector": "residential",
     "is_default_plan": null,
-    "tariff_type": "unknown"
+    "tariff_type": "bundled"
   },
   "effective_range": {
     "start": "2019-05-01",
-    "end": null,
+    "end": "2026-05-01",
     "superseded_at": null,
     "scheduled_end": null
   },
@@ -671,7 +671,18 @@
         0
       ]
     ],
-    "holiday_policy": "unknown"
+    "holiday_policy": "as_weekend",
+    "holidays": [
+      "new_years_day",
+      "washingtons_birthday",
+      "memorial_day",
+      "independence_day",
+      "columbus_day",
+      "labor_day",
+      "veterans_day",
+      "thanksgiving",
+      "christmas"
+    ]
   },
   "fixed_charges": [
     {
@@ -682,11 +693,72 @@
   "min_charge": null,
   "unsupported": [],
   "metering": "net_metering",
-  "source_documents": [],
+  "source_documents": [
+    {
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/tariffs/mae/2026/5.1.26_massachusetts_electric_company_summary_of_rates_tariff_delivery.pdf",
+      "role": "rate_sheet",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/electric-rates/ma/resitable.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.nationalgridus.com/MA-Home/Rates/Service-Rates",
+      "role": "verification",
+      "source_type": "html_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.nationalgridus.com/media/pdfs/billing-payments/bill-inserts/mae/cm4394_mae_ratesummary.pdf",
+      "role": "verification",
+      "source_type": "pdf_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    },
+    {
+      "url": "https://www.mass.gov/info-details/dpu-23-150-national-grid-electric-base-distribution-rate-case",
+      "role": "verification",
+      "source_type": "html_url",
+      "sha256": null,
+      "fetched_at": "2026-07-01",
+      "http_status": null,
+      "content_type": null,
+      "fetch_method": null,
+      "revision_token": null,
+      "locator": null
+    }
+  ],
   "provenance": {
     "urdb_label": "5cd5ae985457a30a0454e9d2",
     "urdb_latest_update": "2019-05-10",
-    "last_verified": null,
+    "last_verified": "2026-07-01",
     "confidence": null,
     "snapshot_sha256": null
   }

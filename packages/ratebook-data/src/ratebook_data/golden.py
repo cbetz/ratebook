@@ -57,9 +57,7 @@ def build_scorecard(results: list[dict]) -> Scorecard:
     if n == 0:
         return Scorecard(0, {}, 0.0, {}, {})
 
-    field_acc = {
-        f: sum(1 for g in grades if g.get(f)) / n for f in STRUCTURAL_FIELDS
-    }
+    field_acc = {f: sum(1 for g in grades if g.get(f)) / n for f in STRUCTURAL_FIELDS}
     arithmetic = sum(1 for g in grades if g.get("arithmetic_consistent")) / n
     verdicts = dict(Counter(g.get("verdict", "unknown") for g in grades))
     relationships = dict(Counter(g.get("rate_relationship", "unknown") for g in grades))

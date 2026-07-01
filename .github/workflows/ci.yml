@@ -29,6 +29,15 @@ jobs:
       - name: Pytest
         run: uv run pytest
 
+      # Real Home Assistant runtime tests for the custom integration. Kept as a separate group
+      # (pytest-homeassistant-custom-component pulls a full HA install) so the step above proves
+      # the tests/ suites stay HA-free.
+      - name: Sync Home Assistant test deps
+        run: uv sync --group ha-test
+
+      - name: Pytest (Home Assistant integration)
+        run: uv run --group ha-test pytest packages/ratebook-homeassistant/tests_ha/
+
   typescript:
     name: TypeScript (engine port)
     runs-on: ubuntu-latest

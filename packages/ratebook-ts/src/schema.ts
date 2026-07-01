@@ -9,6 +9,22 @@
 
 import { Decimal, optDecimal, toDecimal } from "./money.js";
 
+/** Named US holidays a schedule may reference (mirrors the Python `Holiday` enum). */
+export const HOLIDAY_VOCABULARY: ReadonlySet<string> = new Set([
+  "new_years_day",
+  "mlk_day",
+  "washingtons_birthday",
+  "memorial_day",
+  "juneteenth",
+  "independence_day",
+  "labor_day",
+  "columbus_day",
+  "veterans_day",
+  "thanksgiving",
+  "day_after_thanksgiving",
+  "christmas",
+]);
+
 export type TierMaxUnit =
   | "kWh"
   | "kWh daily"
@@ -122,9 +138,18 @@ export class Schedule {
     readonly weekday: number[][],
     readonly weekend: number[][],
     readonly holidayPolicy: string = "unknown",
+    readonly holidays: string[] = [],
+    readonly holidayObservance: string = "sunday_to_monday",
   ) {
     validateMatrix("weekday", weekday);
     validateMatrix("weekend", weekend);
+    if (new Set(holidays).size !== holidays.length) {
+      throw new Error("schedule holidays must be unique");
+    }
+    // Reject unknown names at parse time, matching the Python engine's Holiday enum.
+    for (const h of holidays) {
+      if (!HOLIDAY_VOCABULARY.has(h)) throw new Error(`unknown holiday: ${h}`);
+    }
   }
 
   periodAt(dayType: DayType, month: number, hour: number): number {
@@ -145,6 +170,8 @@ export class Schedule {
       d.weekday as number[][],
       d.weekend as number[][],
       (d.holiday_policy as string) ?? "unknown",
+      (d.holidays as string[]) ?? [],
+      (d.holiday_observance as string) ?? "sunday_to_monday",
     );
   }
 }

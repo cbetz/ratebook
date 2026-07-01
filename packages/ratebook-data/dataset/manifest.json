@@ -1,8 +1,8 @@
 {
   "snapshot": "usurdb-2026-06-13",
   "source": "U.S. Utility Rate Database (URDB), CC0",
-  "note": "Each tariff is URDB-derived and engine-validated (fully priceable by the ratebook engine). Confidence high/medium/low; verify against your bill \u2014 see per-entry notes.",
-  "count": 65,
+  "note": "Tariffs are engine-validated (fully priceable by the ratebook engine). Most are URDB-derived; the EV plans are hand-authored from current rate sheets. Confidence high/medium/low; the 30 HA-bundled plans were audited against current rate sheets 2026-07-01 \u2014 see per-entry notes and each tariff file's source_documents.",
+  "count": 68,
   "tariffs": [
     {
       "slug": "alabama-power-family-dwelling",
@@ -49,12 +49,12 @@
       "state": "AZ",
       "plan_name": "Time-of-Use 4pm-7pm Weekdays (R-TOU-E)",
       "tariff_type": "tou",
-      "energy_rate": "0.153281",
-      "fixed_charge": "13.94",
+      "energy_rate": "0.156693",
+      "fixed_charge": "13.93",
       "label": "69a706ab7da20ea6b00d0238",
       "source_url": "https://www.aps.com/-/media/APS/APSCOM-PDFs/Utility/Regulatory-and-Legal/Regulatory-Plan-Details-Tariffs/Residential/Service-Plans/Time-of-Use-4pm-7pmWeekdays_R-TOU-E.pdf",
       "confidence": "high",
-      "note": "APS's current default residential service plan (new customers default to R-TOU-E). Validates fully_supported; first-period (off-peak winter) effective rate 0.153281 $/kWh; summer on-peak ~0.37. Fixed charge is $0.458/day = ~$13.94/mo. Chosen as the APS pick because the nominal standard plan (R-1 Fixed Energy Charge) is broken in URDB: it is split into separate 'Small Tier 1 / Medium Tier 2 / Large Tier 3' records and the Tier-1 fragment carries an implausible flat 0.42756 $/kWh, while 'Saver Choice Plus' (R-Basic) is unsupported due to a demand charge. Current (start 2026-02-01, no enddate), eiaid 803."
+      "note": "APS's current default residential service plan (new customers default to R-TOU-E). Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "bge-schedule-r-residential",
@@ -101,12 +101,12 @@
       "state": "NY",
       "plan_name": "SC-1 - Residential & Religious Service - Zone J [NYC]",
       "tariff_type": "tiered",
-      "energy_rate": "0.36840",
-      "fixed_charge": "20.00",
+      "energy_rate": "0.319131",
+      "fixed_charge": "21.00",
       "label": "67b4e33e7abe0c080a0b1171",
-      "source_url": "https://lite.coned.com/_external/cerates/documents/elecPSC10/electric-tariff.pdf",
-      "confidence": "high",
-      "note": "Canonical whole-house residential default (SC-1) for ConEd's primary NYC Zone J territory; full bundled rate (delivery+supply), 2-tier (>250 kWh steps to 0.39251). Effective 2025-02-01, no enddate. ~0.37/kWh is accurate for ConEd NYC, among highest in US."
+      "source_url": "https://www.coned.com/-/media/files/coned/documents/rates/electric/psc-10/electric-tariff.pdf",
+      "confidence": "medium",
+      "note": "Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "coned-sc-1-tod-rate-iii-nyc",
@@ -114,12 +114,12 @@
       "state": "NY",
       "plan_name": "SC-1 Residential & Religious Voluntary TOD (Rate III) - Zone J [NYC]",
       "tariff_type": "tou",
-      "energy_rate": "0.49189",
-      "fixed_charge": "20.00",
+      "energy_rate": "0.376615",
+      "fixed_charge": "21.00",
       "label": "67b4ee9d4beb07f0d40cb9eb",
-      "source_url": "https://lite.coned.com/_external/cerates/documents/elecPSC10/electric-tariff.pdf",
+      "source_url": "https://www.coned.com/en/rates-tariffs/rates/electric-rates-schedule/electric-psc-10",
       "confidence": "high",
-      "note": "Default residential TOU companion for NYC Zone J; full bundled 3-period TOU (peak ~0.492). Effective 2025-02-01, no enddate. Chose Rate III over the Rate II variant whose 0.0449 figure reflected delivery-only components."
+      "note": "Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "consumers-rsm-residential-service",
@@ -153,12 +153,12 @@
       "state": "VA",
       "plan_name": "Residential Schedule 1",
       "tariff_type": "seasonal",
-      "energy_rate": "0.163546",
+      "energy_rate": "0.172885",
       "fixed_charge": "7.58",
       "label": "6997c46543b6aa9b2a015f78",
-      "source_url": "https://cdn-dominionenergy-prd-001.azureedge.net/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1.pdf",
+      "source_url": "https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1.pdf",
       "confidence": "high",
-      "note": "Canonical default whole-house residential service for Dominion (Virginia Electric & Power Co). Current effective 2026-01-01, no enddate. Two periods = summer/winter seasonal. eiaid 19876. Engine fully_supported, bundled rate plausible."
+      "note": "Canonical default whole-house residential service for Dominion (Virginia Electric & Power Co). Two periods = summer/winter seasonal. eiaid 19876. Engine fully_supported, bundled rate plausible. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "dominion-va-schedule-1t",
@@ -166,12 +166,12 @@
       "state": "VA",
       "plan_name": "Residential Energy TOU Schedule 1T",
       "tariff_type": "tou",
-      "energy_rate": "0.119251",
+      "energy_rate": "0.131490",
       "fixed_charge": "12.99",
       "label": "6997c7bed3c1f5b8140d5aab",
-      "source_url": "https://cdn-dominionenergy-prd-001.azureedge.net/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1t.pdf",
+      "source_url": "https://www.dominionenergy.com/-/media/content/rates-and-tariffs/pdfs/virginia/residential/schedule-1t.pdf",
       "confidence": "high",
-      "note": "Default residential energy time-of-use option for Dominion VA. Current effective 2026-01-01, no enddate. Chosen over Schedule 1S (demand TOU, engine rejects: demandratestructure present)."
+      "note": "Default residential energy time-of-use option for Dominion VA. Chosen over Schedule 1S (demand TOU, engine rejects: demandratestructure present). Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "dte-d1-2-residential-time-of-day",
@@ -182,9 +182,9 @@
       "energy_rate": "0.289434",
       "fixed_charge": "9.75",
       "label": "69e685c97e0cd194c00ddacb",
-      "source_url": "https://www.michigan.gov/-/media/Project/Websites/mpsc/consumer/rate-books/electric/dte/dtee1cur.pdf?rev=e0168ab41b8245bba5f3ca7631c29614",
+      "source_url": "https://www.michigan.gov/-/media/Project/Websites/mpsc/consumer/rate-books/electric/dte/dtee1cur.pdf (MPSC DTE Electric Rate Book: Sheet D-6.00 D1.2 rates eff. 2026-03-05, Case U-21860; Sheet C-65.00 power supply surcharges and Sheet C-70.00 delivery surcharges eff. 2026-04-01, Case U-21015; Sheet C-62.00 PSCR 2026 plan year)",
       "confidence": "high",
-      "note": "DTE default TOU option: D1.2 Time of Day Full Service. Current 2026-04-01, no enddate. 4 TOU periods (0.289 on-peak summer / 0.182 / 0.264 / 0.180). Duplicate label 69e685c4b710e71bf20702bc captures only a single 0.107 partial tier; selected the complete 4-period capture."
+      "note": "DTE default TOU option: D1.2 Time of Day Full Service. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "dte-d1-residential-full-service",
@@ -195,9 +195,9 @@
       "energy_rate": "0.215256",
       "fixed_charge": "9.75",
       "label": "69e681d00b9e1bb34f0912d9",
-      "source_url": "https://www.michigan.gov/-/media/Project/Websites/mpsc/consumer/rate-books/electric/dte/dtee1cur.pdf?rev=e0168ab41b8245bba5f3ca7631c29614",
+      "source_url": "https://www.dteenergy.com/content/dam/dteenergy/deg/website/residential/Service-Request/pricing/residential-pricing-options/ResidentialElectricRateCard.pdf",
       "confidence": "high",
-      "note": "Canonical DTE standard residential default: D1 Full Service (bundled supply+delivery, the default for non-shopping customers). Current 2026-04-01, no enddate. Single period with 2 tiers (0.215 / 0.228). NOTE: a duplicate label 69e681c4578eb5797e0856bb exists for the same plan/source but captures only a single partial 0.106 tier (likely delivery-only fragment); I selected the complete bundled capture."
+      "note": "Canonical DTE standard residential default: D1 Full Service (bundled supply+delivery, the default for non-shopping customers). Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "duke-carolinas-rs",
@@ -205,12 +205,12 @@
       "state": "NC",
       "plan_name": "RS (Residential Service)",
       "tariff_type": "flat",
-      "energy_rate": "0.127555",
+      "energy_rate": "0.140409",
       "fixed_charge": "14.00",
       "label": "6998c205a746c90e550cb23f",
       "source_url": "https://www.duke-energy.com/-/media/pdfs/for-your-home/rates/electric-nc/ncschedulers.pdf",
       "confidence": "high",
-      "note": "Canonical NC default residential. Single flat energy rate $0.1276/kWh, $14/mo basic facilities charge. Effective 2026-01-01, no enddate. fully_supported=True."
+      "note": "Canonical NC default residential. fully_supported=True. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "duke-florida-rs-1",
@@ -296,12 +296,12 @@
       "state": "CT",
       "plan_name": "Rate 1 - Residential Electric Service",
       "tariff_type": "flat",
-      "energy_rate": "0.16272",
+      "energy_rate": "0.23602",
       "fixed_charge": "9.62",
       "label": "6969332bd41988757a0409fc",
       "source_url": "https://www.eversource.com/docs/default-source/rates-tariffs/ct-electric/rate-1-ct.pdf",
-      "confidence": "high",
-      "note": "Connecticut Light & Power Co d/b/a Eversource. Rate 1 is the standard residential default. Current effective 2026-01-01, no enddate. eiaid 4176. Bundled flat rate. Chosen as the flagship Eversource pick because it is fully bundled (the MA NSTAR R-1 entry is delivery-only)."
+      "confidence": "medium",
+      "note": "Connecticut Light & Power Co d/b/a Eversource. Rate 1 is the standard residential default. eiaid 4176. Bundled flat rate. Chosen as the flagship Eversource pick because it is fully bundled (the MA NSTAR R-1 entry is delivery-only). Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "eversource-ct-rate-7-tou",
@@ -309,12 +309,12 @@
       "state": "CT",
       "plan_name": "Rate 7 - Residential Time-Of-Day Electric Service",
       "tariff_type": "tou",
-      "energy_rate": "0.12789",
+      "energy_rate": "0.20754",
       "fixed_charge": "9.62",
       "label": "6969389492370159da017a0d",
       "source_url": "https://www.eversource.com/docs/default-source/rates-tariffs/ct-electric/rate-7-ct.pdf",
       "confidence": "high",
-      "note": "Connecticut Light & Power Co / Eversource default residential time-of-day. Current effective 2026-01-01, no enddate. Two TOU periods, bundled."
+      "note": "Connecticut Light & Power Co / Eversource default residential time-of-day. Two TOU periods, bundled. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "fpl-rs-1",
@@ -327,7 +327,7 @@
       "label": "69a9c4fc2f2357589100972d",
       "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/res-eff-jan-2026.pdf",
       "confidence": "high",
-      "note": "Canonical FPL default residential. Single period, 2 usage tiers ($0.12258 first tier / $0.14258 above 1000 kWh). $10.52/mo customer charge. Effective 2026-01-01. fully_supported=True."
+      "note": "Canonical FPL default residential. fully_supported=True. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "fpl-rtr-1",
@@ -335,25 +335,25 @@
       "state": "FL",
       "plan_name": "RTR-1 Residential Service Time of Use",
       "tariff_type": "tou",
-      "energy_rate": "0.12258",
+      "energy_rate": "0.06003",
       "fixed_charge": "10.52",
       "label": "69a9c7c368741bcb070c9cec",
-      "source_url": "https://www.fpl.com/content/dam/fplgp/us/en/rates/pdf/res-eff-jan-2026.pdf",
+      "source_url": "https://www.fpl.com/rates/pdf/electric-tariff-section8.pdf",
       "confidence": "high",
-      "note": "FPL default residential TOU. Genuine TOU: off-peak ~$0.12258 vs on-peak $0.26894/kWh (verified distinct periods). energy_rate is the first-period/off-peak base tier. Effective 2026-01-01. fully_supported=True."
+      "note": "FPL default residential TOU. energy_rate is the first-period/off-peak base tier. fully_supported=True. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "georgia-power-r-30",
       "utility_display": "Georgia Power",
       "state": "GA",
-      "plan_name": "Schedule R-30 Residential Service",
+      "plan_name": "Residential Service R-31 (formerly R-30)",
       "tariff_type": "seasonal",
-      "energy_rate": "0.135222",
-      "fixed_charge": "0.4603 ($/day; ~14.00/mo)",
+      "energy_rate": "0.133939",
+      "fixed_charge": "14.00",
       "label": "677c384de1bf88853903410c",
-      "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/residential-pdfs/tariffs/2025/r-30.pdf",
+      "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/tariffs/r.pdf",
       "confidence": "high",
-      "note": "Canonical GA default residential. Seasonal: 2 periods (summer single-rate $0.135222, winter 3 tiers). Basic charge is $0.4603/DAY (~$14.00/mo, converted). Effective 2025-01-01. fully_supported=True."
+      "note": "Canonical GA default residential. fully_supported=True. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "georgia-power-tou-oa-14",
@@ -361,12 +361,12 @@
       "state": "GA",
       "plan_name": "Schedule TOU-OA-14 Time of Use - Overnight Advantage",
       "tariff_type": "tou",
-      "energy_rate": "0.067439",
+      "energy_rate": "0.064333",
       "fixed_charge": "14.00",
       "label": "677c39c3ef5537337508436e",
       "source_url": "https://www.georgiapower.com/content/dam/georgia-power/pdfs/residential-pdfs/tariffs/2025/tou-oa-14.pdf",
       "confidence": "high",
-      "note": "GA default residential TOU (Overnight Advantage), energy-only (no demand charge), so engine-supported. 3 periods; first-period/off-peak overnight rate $0.067439/kWh. Basic charge $0.4603/day (~$14/mo). Effective 2025-01-01. fully_supported=True. Chose this over TOU-RD-11 (has demand charge, unsupported) and TOU-REO-18."
+      "note": "GA default residential TOU (Overnight Advantage), energy-only (no demand charge), so engine-supported. fully_supported=True. Chose this over TOU-RD-11 (has demand charge, unsupported) and TOU-REO-18. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "idaho-power-schedule-1",
@@ -426,12 +426,12 @@
       "state": "MA",
       "plan_name": "R-1 Residential",
       "tariff_type": "flat",
-      "energy_rate": "0.28678",
-      "fixed_charge": "10.00",
+      "energy_rate": "0.37384",
+      "fixed_charge": "10",
       "label": "67cf32f6ef8f02942e0586bd",
       "source_url": "https://www.nationalgridus.com/media/pdfs/billing-payments/tariffs/mae/meco_delivery.pdf",
       "confidence": "high",
-      "note": "Massachusetts Electric Co d/b/a National Grid. R-1 is the standard residential default. Current effective 2025-03-01, no enddate. eiaid 11804. Rate is bundled (delivery + basic service), ~$0.287/kWh, consistent with MA all-in pricing."
+      "note": "Massachusetts Electric Co d/b/a National Grid. R-1 is the standard residential default. eiaid 11804. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "national-grid-ma-r4-tou",
@@ -440,11 +440,11 @@
       "plan_name": "R-4 Residential Time-of-Use",
       "tariff_type": "tou",
       "energy_rate": "0.19174",
-      "fixed_charge": "20.00",
+      "fixed_charge": "20",
       "label": "5cd5ae985457a30a0454e9d2",
-      "source_url": "https://www9.nationalgridus.com/non_html/meco.pdf",
-      "confidence": "medium",
-      "note": "Massachusetts Electric Co optional residential TOU. No enddate (open). Source dates to 2019 rate filing; older than the R-1 pick, so supply component may be stale - flagged medium. Two TOU periods."
+      "source_url": "https://www.nationalgridus.com/media/pdfs/billing-payments/tariffs/mae/2026/5.1.26_massachusetts_electric_company_summary_of_rates_tariff_delivery.pdf",
+      "confidence": "high",
+      "note": "DISCONTINUED: no R-4 residential TOU rate exists in the current National Grid MA rate summary (M.D.P.U. 1-26-F, eff 5/1/2026); kept for history, excluded from the HA bundle. Massachusetts Electric Co optional residential TOU. No enddate (open). Source dates to 2019 rate filing; older than the R-1 pick, so supply component may be stale - flagged medium. Two TOU periods."
     },
     {
       "slug": "national-grid-ny-sc1-zone-a",
@@ -530,12 +530,12 @@
       "state": "PA",
       "plan_name": "Residential Service (R)",
       "tariff_type": "flat",
-      "energy_rate": "0.11647",
-      "fixed_charge": "11.30",
+      "energy_rate": "0.23406",
+      "fixed_charge": "11.3",
       "label": "69e650226746522c70079989",
       "source_url": "https://azure-na-assets.contentstack.com/v3/assets/blt1b5616c79bacadb4/bltef2bb157cc587eac/695440f39dd7d11ce0542224/Pages_52_Rate_R_from_clean_up_pages_for_ICUS_FARS_Supp_no._21_eff_Jan_1_2026.pdf",
-      "confidence": "high",
-      "note": "Canonical residential default (Rate R), single flat period, effective 2026-01-01, no enddate. ~0.116/kWh is plausible (PA deregulated but this row appears to include default-service supply). One of two identical duplicate rows; picked one."
+      "confidence": "medium",
+      "note": "One of two identical duplicate rows; picked one. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "peco-rate-r-tou",
@@ -543,12 +543,12 @@
       "state": "PA",
       "plan_name": "Residential Service (R) - TOU",
       "tariff_type": "tou",
-      "energy_rate": "0.19242",
-      "fixed_charge": "11.30",
+      "energy_rate": "0.19572",
+      "fixed_charge": "11.29",
       "label": "69e65a18805b2131910774d9",
-      "source_url": "https://azure-na-assets.contentstack.com/v3/assets/blt1b5616c79bacadb4/bltef2bb157cc587eac",
+      "source_url": "https://www.peco.com/my-account/my-dashboard/rates-tariffs/electric-service/current-electric",
       "confidence": "high",
-      "note": "Default residential TOU companion; 3-period with strong differentiation (peak 0.43607 / off-peak 0.16921). Effective 2026-01-01, no enddate."
+      "note": "Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "pepco-dc-schedule-r-residential",
@@ -583,11 +583,11 @@
       "plan_name": "E-1 Residential Service (Baseline Region P)",
       "tariff_type": "tiered",
       "energy_rate": "0.32561",
-      "fixed_charge": "0.79343",
+      "fixed_charge": "24.13",
       "label": "69d92c23ac3477692606714c",
-      "source_url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-1.pdf",
+      "source_url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-1.pdf (Schedule E-1, Sheet 1: Cal. P.U.C. Sheet 61362-E, Advice 7921-E, effective June 1, 2026; Sheets 2-6: Advice 7846-E, effective March 1, 2026 \u2014 fetched 2026-07-01)",
       "confidence": "high",
-      "note": "PG&E canonical default residential tiered rate (E-1). Region P (San Francisco / coastal) chosen as the representative baseline region; PG&E E-1 is split into 10 climate baseline regions (P-Z), all identical structure differing only by baseline allowance. Effective 2026-03-27, current (no enddate). Fixed charge is the ~$0.79/mo minimum bill component."
+      "note": "PG&E canonical default residential tiered rate (E-1). Region P (San Francisco / coastal) chosen as the representative baseline region; PG&E E-1 is split into 10 climate baseline regions (P-Z), all identical structure differing only by baseline allowance. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "pge-e-tou-c",
@@ -596,11 +596,24 @@
       "plan_name": "E-TOU-C Residential Time of Use (Baseline Region P)",
       "tariff_type": "tou-tiered",
       "energy_rate": "0.441",
-      "fixed_charge": "0.79343",
+      "fixed_charge": "24.13",
       "label": "69de6fa62aa9e9994f0ed2bd",
       "source_url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-TOU-C.pdf",
       "confidence": "high",
-      "note": "PG&E default residential TOU rate (E-TOU-C), Region P. Peak/off-peak with baseline credit. 0.441 is the first (peak) period tier-1 effective rate; off-peak periods are lower. Effective 2026-03-27, current."
+      "note": "PG&E default residential TOU rate (E-TOU-C), Region P. Peak/off-peak with baseline credit. Re-verified against the utility's current rate sheet 2026-07-01."
+    },
+    {
+      "slug": "pge-ev2-a",
+      "utility_display": "Pacific Gas & Electric",
+      "state": "CA",
+      "plan_name": "Home Charging EV2-A",
+      "tariff_type": "tou",
+      "energy_rate": "0.53809",
+      "fixed_charge": "24.13",
+      "label": null,
+      "source_url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_EV2%20(Sch).pdf",
+      "confidence": "high",
+      "note": "PG&E optional residential EV TOU rate (Schedule EV2, billed as EV2A). Hand-authored from the tariff book (not URDB). Flat TOU, no baseline tiers, same windows every day incl. weekends/holidays: peak 4-9pm, partial-peak 3-4pm and 9pm-12am, off-peak rest. Summer Jun 1-Sep 30, winter Oct 1-May 31. 0.53809 is summer peak; off-peak 0.22558 year-round. Rates effective 2026-06-01 (Sheet 61374-E, Advice 7921-E, D.26-04-036); cross-checked against PG&E residential rate plan pricing sheet. Fixed charge is the Income Tier 3 (standard non-CARE/FERA) Base Services Charge $0.79343/day, same convention as pge-e-1/pge-e-tou-c. CARE Tier 1 $0.19713/day and Tier 2 $0.39688/day not modeled; semi-annual CA Climate Credit (-$36.18) not modeled. Hand-authored from the current rate sheet, adversarially verified, 2026-07-01."
     },
     {
       "slug": "pge-or-rate-7",
@@ -647,12 +660,12 @@
       "state": "NJ",
       "plan_name": "RS - Residential Service",
       "tariff_type": "tiered",
-      "energy_rate": "0.060167",
-      "fixed_charge": "6.00",
+      "energy_rate": "0.248622",
+      "fixed_charge": "6",
       "label": "69e244d3a999a8521d0fed8c",
-      "source_url": "https://nj.pseg.com/-/media/pseg/public-site/documents/current-electric-tariff/electric-tariff-17-sprc-effective-20260401.ashx",
+      "source_url": "https://nj.pseg.com/-/media/pseg/public-site/documents/current-electric-tariff/electric-tariff-17-eem-effective-20260622.ashx",
       "confidence": "high",
-      "note": "Canonical residential default (RS). Rate ~0.060/kWh is delivery-only because NJ is deregulated and supply (BGS) is procured separately/competitively; this is the legitimate current PSE&G utility tariff effective 2026-04-01. One of two identical duplicate rows; picked one."
+      "note": "Canonical residential default (RS). One of two identical duplicate rows; picked one. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "pseg-rs-tou-3p",
@@ -660,12 +673,12 @@
       "state": "NJ",
       "plan_name": "RS-TOU-3P - Residential TOU 3 Period Service",
       "tariff_type": "tou",
-      "energy_rate": "0.168251",
-      "fixed_charge": "6.00",
+      "energy_rate": "0.376607",
+      "fixed_charge": "6",
       "label": "69e24a7a4db539998e061b9c",
-      "source_url": "https://nj.pseg.com/-/media/pseg/public-site/documents/current-electric-tariff/electric-tariff-17-sprc-effective-20260401.ashx",
+      "source_url": "https://nj.pseg.com/-/media/pseg/public-site/documents/current-electric-tariff/electric-tariff-17-eem-effective-20260622.ashx",
       "confidence": "high",
-      "note": "Default residential TOU companion; 6-period schedule with genuine time differentiation (peak ~0.225, super-off-peak ~0.033). Effective 2026-04-01, no enddate."
+      "note": "Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "sce-domestic-d",
@@ -673,12 +686,12 @@
       "state": "CA",
       "plan_name": "Domestic Service Schedule D (Baseline Region 5)",
       "tariff_type": "tiered",
-      "energy_rate": "0.33586",
-      "fixed_charge": "0.031",
+      "energy_rate": "0.30214",
+      "fixed_charge": "24.15",
       "label": "66cc9e270d535cf5c3058518",
-      "source_url": "https://edisonintl.sharepoint.com/teams/Public/TM2/Shared%20Documents/Public/Regulatory/Tariff-SCE%20Tariff%20Books/Electric/Schedules/Residential%20Rates/ELECTRIC_SCHEDULES_D.pdf",
+      "source_url": "https://edisonintl.sharepoint.com/teams/Public/TM2/Shared%20Documents/Public/Regulatory/Tariff-SCE%20Tariff%20Books/Electric/Schedules/Residential%20Rates/ELECTRIC_SCHEDULES_D.pdf (Schedule D, Cal. P.U.C. Sheets 91130-E/91131-E, Advice 5829-E, effective 2026-06-01; Sheet 4 holiday/season conditions 90636-E; direct URL requires MS login \u2014 reachable anonymously via the 'Residential Rates' share link on sce.com/regulatory/regulatory-information/tariff-books/rates-pricing-choices: https://edisonintl.sharepoint.com/:f:/t/Public/TM2/EuKm76K33QlGkEKxS2ZVy8EBNSTo2UjsnzEMOxsP8ISRKg)",
       "confidence": "high",
-      "note": "SCE canonical default residential tiered rate (Schedule D / Domestic Service). Region 5 chosen as representative; SCE splits Schedule D into climate baseline regions (5,6,8,9,10,13,14,15,16) with identical structure. Fixed charge is the small daily minimum-charge component (~$0.031/day). Effective 2024-06-01, current."
+      "note": "SCE canonical default residential tiered rate (Schedule D / Domestic Service). Region 5 chosen as representative; SCE splits Schedule D into climate baseline regions (5,6,8,9,10,13,14,15,16) with identical structure. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "sce-tou-d-4-9pm",
@@ -686,12 +699,25 @@
       "state": "CA",
       "plan_name": "TOU-D-4-9PM Residential Time of Use",
       "tariff_type": "tou",
-      "energy_rate": "0.37846",
-      "fixed_charge": "0.031",
+      "energy_rate": "0.35508",
+      "fixed_charge": "24.15",
       "label": "66ccb7bfa7d4ef64fc07ad6b",
-      "source_url": "https://edisonintl.sharepoint.com/teams/Public/TM2/Shared%20Documents/Public/Regulatory/Tariff-SCE%20Tariff%20Books/Electric/Schedules/Residential%20Rates/ELECTRIC_SCHEDULES_TOU-D.pdf",
-      "confidence": "medium",
-      "note": "SCE default residential TOU rate (TOU-D-4-9PM, 4-9pm peak window). 0.37846 is the first-period effective rate; peak periods reach ~0.60. Two identical-source duplicate rows exist in URDB (66ccb7bfa7d4ef64fc07ad6b and 66ccb7ae0a0eb5212a062238); chose the one with full seasonal peak/off-peak differentiation. Effective 2024-06-01, current."
+      "source_url": "https://edisonintl.sharepoint.com/teams/Public/TM2/Shared%20Documents/Public/Regulatory/Tariff-SCE%20Tariff%20Books/Electric/Schedules/Residential%20Rates/ELECTRIC_SCHEDULES_TOU-D.pdf (Schedule TOU-D tariff book: Sheet 2 rates, Advice 5829-E, effective 2026-06-01; Sheets 8-9 TOU periods/holidays/seasons, Advice 5837-E, effective 2026-06-25; read in browser via SharePoint viewer)",
+      "confidence": "high",
+      "note": "SCE default residential TOU rate (TOU-D-4-9PM, 4-9pm peak window). Two identical-source duplicate rows exist in URDB (66ccb7bfa7d4ef64fc07ad6b and 66ccb7ae0a0eb5212a062238); chose the one with full seasonal peak/off-peak differentiation. Re-verified against the utility's current rate sheet 2026-07-01."
+    },
+    {
+      "slug": "sce-tou-d-prime",
+      "utility_display": "Southern California Edison",
+      "state": "CA",
+      "plan_name": "TOU-D-PRIME",
+      "tariff_type": "tou",
+      "energy_rate": "0.60133",
+      "fixed_charge": "24.15",
+      "label": null,
+      "source_url": "https://www.sce.com/regulatory/tariff-books/rates-pricing-choices",
+      "confidence": "high",
+      "note": "Hand-authored from SCE Schedule TOU-D Option PRIME tariff sheets (Cal. P.U.C. Sheet 91200-E, Advice 5829-E, effective 2026-06-01); generation rates independently confirmed by 3CE joint rate sheet; rounded rates confirmed by sce.com plan pages. energy_rate null because the plan is TOU (6 seasonal periods, 0.25475-0.60133 $/kWh all-in). Hand-authored from the current rate sheet, adversarially verified, 2026-07-01."
     },
     {
       "slug": "sdge-dr",
@@ -707,17 +733,30 @@
       "note": "SDG&E canonical standard residential tiered rate (Schedule DR). Coastal baseline region chosen as representative (also Desert/Inland/Mountain). No fixed monthly charge - SDG&E uses a minimum bill. Effective 2024-09-30, current. URDB source was a transient blob: URL; substituted SDG&E pricing-plans page as stable source."
     },
     {
+      "slug": "sdge-ev-tou-5",
+      "utility_display": "San Diego Gas & Electric",
+      "state": "CA",
+      "plan_name": "EV-TOU-5 Domestic Time-of-Use for Households with Electric Vehicles",
+      "tariff_type": "tou",
+      "energy_rate": "0.79321",
+      "fixed_charge": "24.13",
+      "label": null,
+      "source_url": "https://www.sdge.com/sites/default/files/regulatory/6-1-26%20Schedule%20EV-TOU-5%20Total%20Rates%20Table.pdf",
+      "confidence": "high",
+      "note": "Hand-authored from SDG&E's official EV-TOU-5 Total Rates Table effective 6/1/2026 (bundled totals incl. EECC generation). 0.79321 is summer on-peak; summer/winter super off-peak 0.12852/0.12115. Fixed charge is the CPUC Base Services Charge $0.79343/day (~$24.14/mo, non-CARE), which replaced the old ~$16/mo EV-TOU-5 basic service fee in Oct 2025. On-peak 4-9pm all days; super off-peak midnight-6am + 10am-2pm weekdays (year-round as of 5/1/2026), midnight-2pm weekends/holidays. Summer Jun-Oct, winter Nov-May. No baseline tiers on EV rates. 6 periods; fully_supported=True. CARE/FERA/MB variants and CCA (unbundled) generation not covered. Hand-authored from the current rate sheet, adversarially verified, 2026-07-01."
+    },
+    {
       "slug": "sdge-tou-dr-1",
       "utility_display": "San Diego Gas & Electric",
       "state": "CA",
       "plan_name": "Schedule TOU-DR-1 Residential Time of Use (Coastal Baseline Region)",
       "tariff_type": "tou",
-      "energy_rate": "0.59976",
-      "fixed_charge": "",
+      "energy_rate": "0.57796",
+      "fixed_charge": "24.13",
       "label": "6772cfc9b5f9d561220ececb",
-      "source_url": "https://www.sdge.com/residential/pricing-plans/about-our-pricing-plans",
+      "source_url": "https://www.sdge.com/sites/default/files/regulatory/6-1-26%20Schedule%20TOU-DR1%20Total%20Rates%20Table.pdf",
       "confidence": "high",
-      "note": "SDG&E default residential TOU rate (TOU-DR-1) - the plan most SDG&E residential customers default to. 0.59976 is the on-peak (first) period effective rate; off-peak periods drop to ~0.25, consistent with SDG&E's high CA rates. Coastal region. No fixed charge (minimum bill). Effective 2024-09-30, current. URDB source was a transient blob: URL; substituted SDG&E pricing page."
+      "note": "SDG&E default residential TOU rate (TOU-DR-1) - the plan most SDG&E residential customers default to. Coastal region. No fixed charge (minimum bill). URDB source was a transient blob: URL; substituted SDG&E pricing page. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "smud-residential-r",
@@ -738,12 +777,12 @@
       "state": "AZ",
       "plan_name": "E-23 Basic Price Plan for Residential Service (Tier 1)",
       "tariff_type": "tiered",
-      "energy_rate": "0.1204",
-      "fixed_charge": "20.00",
+      "energy_rate": "0.1166",
+      "fixed_charge": "20",
       "label": "69a1b8bf40140c3bb007f1bd",
-      "source_url": "https://www.srpnet.com/assets/srpnet/pdf/price-plans/FY26/TCA%20Ratebooks/2025%20Ratebook%20E-23%20with%20TCA.pdf",
+      "source_url": "https://www.srpnet.com/assets/srpnet/pdf/price-plans/2025-Ratebook-with-Temporary-FPPAM.pdf",
       "confidence": "high",
-      "note": "SRP's standard default residential price plan (E-23 Basic). Seasonal tiered (winter 0.1204 / summer-peak 0.1398 / summer 0.1097 $/kWh). Validates fully_supported. URDB splits E-23 into Tier 1/2/3 records; Tier 1 chosen as the canonical first-tier representation. Current (start 2026-01-01, no enddate), eiaid 16572. SRP is a public power district not regulated by the ACC."
+      "note": "SRP's standard default residential price plan (E-23 Basic). Validates fully_supported. URDB splits E-23 into Tier 1/2/3 records; Tier 1 chosen as the canonical first-tier representation. SRP is a public power district not regulated by the ACC. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "srp-e-26-tou",
@@ -752,11 +791,11 @@
       "plan_name": "E-26 SRP Time-of-Use Price Plan (Tier 1)",
       "tariff_type": "tou-tiered",
       "energy_rate": "0.0891",
-      "fixed_charge": "20.00",
+      "fixed_charge": "20",
       "label": "69a1d19551a2a4045a02f890",
-      "source_url": "https://www.srpnet.com/assets/srpnet/pdf/price-plans/FY26/TCA%20Ratebooks/2025-Ratebook-with-2026-TCA-with-cover.pdf",
+      "source_url": "https://www.srpnet.com/assets/srpnet/pdf/price-plans/FY26/2025%20Ratebook%20E-26.pdf",
       "confidence": "high",
-      "note": "SRP's standard residential time-of-use plan (E-26). Validates fully_supported; first-period effective rate 0.0891 $/kWh (off-peak), with on-peak higher. Current (start 2026-01-01, no enddate), eiaid 16572."
+      "note": "SRP's standard residential time-of-use plan (E-26). Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "tampa-electric-rs",
@@ -829,12 +868,12 @@
       "state": "CO",
       "plan_name": "Residential Energy Time Of Use (Schedule RE-TOU)",
       "tariff_type": "tou",
-      "energy_rate": "0.32832",
+      "energy_rate": "0.31174",
       "fixed_charge": "8.19",
       "label": "69bd927af5cd25efec0e9aad",
-      "source_url": "https://xcelnew.my.salesforce.com/sfc/p/#1U0000011ttV/a/8b000002Y8xL/kYe61yf.9xyigvh2701Az49XLgU2izDS8ShGaCXiwsQ",
+      "source_url": "https://xcelnew.my.salesforce.com/sfc/p/#1U0000011ttV/a/R300000RlUER/5G4ru_.jqcaA1xENmOJaXHZ1xgEeRfm5coulNeJ2Wz4",
       "confidence": "high",
-      "note": "Xcel Colorado default TOU rate: Schedule RE-TOU (now the default residential rate in Colorado). Current 2026-01-01, no enddate. 4 TOU periods (0.328 on-peak / 0.122 / 0.381 / 0.139). Canonical TOU companion to Schedule R."
+      "note": "Xcel Colorado default TOU rate: Schedule RE-TOU (now the default residential rate in Colorado). Canonical TOU companion to Schedule R. Re-verified against the utility's current rate sheet 2026-07-01."
     },
     {
       "slug": "xcel-psco-schedule-r-residential",

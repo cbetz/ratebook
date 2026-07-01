@@ -25,5 +25,11 @@ rsync -a --delete --exclude='__pycache__' --exclude='*.pyc' \
   "$MONO/packages/ratebook-homeassistant/custom_components/ratebook/" \
   "$DIST/custom_components/ratebook/"
 
-echo "Synced integration -> $DIST/custom_components/ratebook"
+# 3. Mirror the pieces the dist README links to (hacs.json + docs + dashboard example).
+cp "$MONO/packages/ratebook-homeassistant/hacs.json" "$DIST/hacs.json"
+mkdir -p "$DIST/docs/integrations" "$DIST/examples"
+cp "$MONO/docs/integrations/evcc.md" "$MONO/docs/integrations/emhass.md" "$DIST/docs/integrations/"
+cp "$MONO/packages/ratebook-homeassistant/examples/dashboard.yaml" "$DIST/examples/"
+
+echo "Synced integration -> $DIST/custom_components/ratebook (+ hacs.json, docs, examples)"
 echo "Next: cd '$DIST' && git add -A && git commit -m 'Sync from monorepo' && git push"

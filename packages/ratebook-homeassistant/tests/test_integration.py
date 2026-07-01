@@ -112,3 +112,36 @@ def test_vendored_integration_imports_and_prices() -> None:
         sys.path.remove(str(INTEGRATION))
         for name in [m for m in sys.modules if m == "vendor" or m.startswith("vendor.")]:
             del sys.modules[name]
+
+
+def test_vendored_tree_survives_without_workspace_ratebook() -> None:
+    """The vendor tree must work on a REAL install, where no top-level `ratebook` exists.
+
+    In this repo the workspace `ratebook` package hides un-rewritten absolute imports (the
+    vendored module silently binds the workspace copy — and its enums fail `is` checks
+    against the vendored classes). Run in a subprocess with `ratebook` imports blocked, and
+    assert holiday day-typing works end to end (the enum-identity failure mode).
+    """
+    code = f"""
+import sys
+sys.path.insert(0, {str(INTEGRATION)!r})
+class _BlockWorkspaceRatebook:
+    def find_spec(self, name, *args, **kwargs):
+        if name == "ratebook" or name.startswith("ratebook."):
+            raise ModuleNotFoundError(
+                f"blocked: {{name}} — the vendored tree must not import the workspace package"
+            )
+sys.meta_path.insert(0, _BlockWorkspaceRatebook())
+from vendor.ratebook_ha import pricing
+import datetime as dt
+# PECO Rate R TOU: weekday peak 2-6pm, Labor Day priced on the weekend schedule.
+t = pricing.load_bundled("peco-rate-r-tou")
+assert pricing.is_holiday(t, dt.date(2026, 9, 7)) is True, "Labor Day 2026 must be a holiday"
+assert pricing.is_holiday(t, dt.date(2026, 9, 8)) is False
+assert pricing.current_price(t, dt.datetime(2026, 9, 7, 15)) < pricing.current_price(
+    t, dt.datetime(2026, 9, 8, 15)
+), "holiday afternoon must price off-peak"
+"""
+    import subprocess
+
+    subprocess.run([sys.executable, "-c", code], check=True, capture_output=True, text=True)

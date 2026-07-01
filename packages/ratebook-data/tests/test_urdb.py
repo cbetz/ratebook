@@ -47,9 +47,7 @@ def test_load_urdb_all_varchar_with_provenance(tmp_path: Path) -> None:
     try:
         types = {row[1] for row in con.execute("DESCRIBE raw.urdb").fetchall()}
         assert types == {"VARCHAR"}
-        ingest = con.execute(
-            "SELECT source, file, sha256, row_count FROM raw.ingests"
-        ).fetchall()
+        ingest = con.execute("SELECT source, file, sha256, row_count FROM raw.ingests").fetchall()
         assert ingest == [("urdb", csv_gz.name, "abc", 2)]
     finally:
         con.close()

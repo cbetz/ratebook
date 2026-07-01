@@ -48,7 +48,69 @@ function addDaysUtc(d: Date, n: number): Date {
 function isoDate(d: Date): string {
   return d.toISOString().slice(0, 10);
 }
-function dayTypeOf(d: Date): DayType {
+// ---------------------------------------------------------------------------------------
+// Holidays (mirrors the Python engine's named-holiday rules; dates computed in UTC)
+// ---------------------------------------------------------------------------------------
+function nthWeekdayUtc(year: number, month: number, jsDay: number, n: number): Date {
+  // jsDay uses JS convention (0 = Sun … 6 = Sat); month is 1-12.
+  const first = new Date(Date.UTC(year, month - 1, 1));
+  const offset = (jsDay - first.getUTCDay() + 7) % 7;
+  return new Date(Date.UTC(year, month - 1, 1 + offset + 7 * (n - 1)));
+}
+function lastWeekdayUtc(year: number, month: number, jsDay: number): Date {
+  const last = new Date(Date.UTC(year, month, 0)); // day 0 of next month = last of this one
+  const offset = (last.getUTCDay() - jsDay + 7) % 7;
+  return new Date(last.getTime() - offset * 86_400_000);
+}
+
+const HOLIDAY_RULE: Record<string, (y: number) => Date> = {
+  new_years_day: (y) => new Date(Date.UTC(y, 0, 1)),
+  mlk_day: (y) => nthWeekdayUtc(y, 1, 1, 3),
+  washingtons_birthday: (y) => nthWeekdayUtc(y, 2, 1, 3),
+  memorial_day: (y) => lastWeekdayUtc(y, 5, 1),
+  juneteenth: (y) => new Date(Date.UTC(y, 5, 19)),
+  independence_day: (y) => new Date(Date.UTC(y, 6, 4)),
+  labor_day: (y) => nthWeekdayUtc(y, 9, 1, 1),
+  columbus_day: (y) => nthWeekdayUtc(y, 10, 1, 2),
+  veterans_day: (y) => new Date(Date.UTC(y, 10, 11)),
+  thanksgiving: (y) => nthWeekdayUtc(y, 11, 4, 4),
+  day_after_thanksgiving: (y) => addDaysUtc(nthWeekdayUtc(y, 11, 4, 4), 1),
+  christmas: (y) => new Date(Date.UTC(y, 11, 25)),
+};
+
+const holidayCache = new Map<string, Set<string>>();
+
+/** ISO dates the named holidays land on in `year` (with sunday→monday observance). */
+export function holidayDates(
+  year: number,
+  holidays: readonly string[],
+  observance = "sunday_to_monday",
+): Set<string> {
+  const key = `${year}|${observance}|${holidays.join(",")}`;
+  const cached = holidayCache.get(key);
+  if (cached) return cached;
+  const out = new Set<string>();
+  for (const h of holidays) {
+    const rule = HOLIDAY_RULE[h];
+    if (!rule) throw new Error(`unknown holiday: ${h}`);
+    const d = rule(year);
+    out.add(isoDate(d));
+    if (observance === "sunday_to_monday" && d.getUTCDay() === 0) out.add(isoDate(addDaysUtc(d, 1)));
+  }
+  holidayCache.set(key, out);
+  return out;
+}
+
+function dayTypeOf(d: Date, schedule?: Tariff["schedule"]): DayType {
+  if (
+    schedule &&
+    schedule.holidayPolicy === "as_weekend" &&
+    schedule.holidays.length > 0 &&
+    holidayDates(d.getUTCFullYear(), schedule.holidays, schedule.holidayObservance).has(isoDate(d))
+  ) {
+    return "weekend";
+  }
+  // "as_weekday" and "unknown" price every day by its real weekday/weekend.
   const wd = d.getUTCDay(); // 0 = Sun … 6 = Sat
   return wd === 0 || wd === 6 ? "weekend" : "weekday";
 }
@@ -140,7 +202,7 @@ export class SupportReport {
 // --- internals ---
 /** Public: the energy period index a tariff assigns to (day, hour). Mirror of `period_at`. */
 export function periodAt(tariff: Tariff, day: Date, hour: number): number {
-  return tariff.schedule.periodAt(dayTypeOf(day), day.getUTCMonth() + 1, hour);
+  return tariff.schedule.periodAt(dayTypeOf(day, tariff.schedule), day.getUTCMonth() + 1, hour);
 }
 
 function periodActiveDays(tariff: Tariff, window: BillingWindow): Map<number, number> {
@@ -170,7 +232,7 @@ export function hourlyMarginalPrices(tariff: Tariff, window: BillingWindow, tier
   for (const day of window.iterDays()) {
     for (let hour = 0; hour < 24; hour++) {
       const tiers = tariff.energy.periods[periodAt(tariff, day, hour)].tiers;
-      prices.push(tiers[Math.min(tier, tiers.length - 1)].effectiveRate);
+      prices.push(tiers[Math.max(0, Math.min(tier, tiers.length - 1))].effectiveRate);
     }
   }
   return prices;
@@ -273,7 +335,10 @@ function warningsFor(tariff: Tariff): string[] {
   if (tariff.energy.periods.some((p) => p.tiers.some((t) => t.sell !== null && !t.sell.isZero()))) {
     out.push("sell_rate_not_modeled");
   }
-  if (tariff.schedule.holidayPolicy !== "unknown") out.push("holiday_policy_ignored_in_v0");
+  if (tariff.schedule.holidayPolicy === "as_weekend" && tariff.schedule.holidays.length === 0) {
+    // The rate sheet defines holiday treatment but the dates aren't enumerated yet.
+    out.push("holidays_not_enumerated");
+  }
   return [...new Set(out)];
 }
 

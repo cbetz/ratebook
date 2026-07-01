@@ -23,6 +23,20 @@ Homepage = "https://github.com/cbetz/ratebook"
 Repository = "https://github.com/cbetz/ratebook"
 Issues = "https://github.com/cbetz/ratebook/issues"
 
+[dependency-groups]
+# Real Home Assistant runtime tests (tests_ha/). pytest-homeassistant-custom-component pins a
+# concrete HA release; 0.13.205 is the last release that supports Python 3.12 (the workspace's
+# floor) and pulls homeassistant==2025.1.4 — well above the hacs.json minimum of 2024.12.0. The
+# no-HA suite under tests/ stays HA-free and is unaffected by this group.
+ha-test = [
+    "pytest-homeassistant-custom-component==0.13.205",
+]
+
+[tool.uv]
+# Home Assistant depends on pre-release pins (e.g. aiohasupervisor beta), so the ha-test group
+# only resolves with pre-releases enabled.
+prerelease = "allow"
+
 [tool.uv.sources]
 ratebook = { workspace = true }
 

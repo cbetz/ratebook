@@ -27,3 +27,7 @@ select = ["E", "W", "F", "I", "UP", "B", "SIM", "RUF"]
 [tool.pytest.ini_options]
 testpaths = ["packages"]
 addopts = "-q"
+# Runtime Home Assistant tests (packages/ratebook-homeassistant/tests_ha/) use pytest-asyncio's
+# auto mode, as pytest-homeassistant-custom-component requires. Harmless to the sync suites.
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"

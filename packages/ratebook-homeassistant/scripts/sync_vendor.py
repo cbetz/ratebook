@@ -15,6 +15,7 @@ is caught in CI. Run after changing the engine or the adapter:
 
 from __future__ import annotations
 
+import re
 import shutil
 from pathlib import Path
 
@@ -46,14 +47,22 @@ def build_vendor(dest: Path) -> None:
     shutil.copytree(ENGINE_SRC, dest / "ratebook", ignore=_IGNORE)
     shutil.copytree(ADAPTER_SRC, dest / "ratebook_ha", ignore=_IGNORE)
 
-    # The adapter is the only file with a cross-package absolute import; rewrite it to a
-    # relative import so it resolves to the sibling vendored engine, not a global `ratebook`.
-    pricing = dest / "ratebook_ha" / "pricing.py"
-    text = pricing.read_text()
-    rewritten = text.replace("from ratebook import (", "from ..ratebook import (")
-    if rewritten == text:
-        raise SystemExit("expected 'from ratebook import (' in adapter pricing.py — vendor aborted")
-    pricing.write_text(rewritten)
+    # The adapter imports the engine by its absolute name; rewrite EVERY such import to a
+    # relative one so it resolves to the sibling vendored engine, not a global `ratebook`.
+    # (`from ratebook import X`, `from ratebook.schema import Y`, … — a missed form means
+    # ModuleNotFoundError on a real install, where no top-level `ratebook` exists.)
+    import_re = re.compile(r"^(\s*)from ratebook(\.[\w.]+)? import ", flags=re.MULTILINE)
+    rewritten_any = False
+    for module in (dest / "ratebook_ha").rglob("*.py"):
+        text = module.read_text()
+        new_text, n = import_re.subn(r"\1from ..ratebook\2 import ", text)
+        if n:
+            rewritten_any = True
+            module.write_text(new_text)
+        if re.search(r"^\s*import ratebook\b", new_text, flags=re.MULTILINE):
+            raise SystemExit(f"unrewritable 'import ratebook' in {module} — vendor aborted")
+    if not rewritten_any:
+        raise SystemExit("expected engine imports in the adapter — vendor aborted")
 
 
 if __name__ == "__main__":
