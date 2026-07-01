@@ -7,7 +7,6 @@ from datetime import date
 from decimal import Decimal
 
 import pytest
-from conftest import tou_schedule, tou_tariff
 from ratebook import (
     BillingWindow,
     Holiday,
@@ -20,6 +19,8 @@ from ratebook import (
     holiday_dates,
     hourly_marginal_prices,
 )
+
+from conftest import tou_schedule, tou_tariff
 
 ALL_TWELVE = tuple(Holiday)
 

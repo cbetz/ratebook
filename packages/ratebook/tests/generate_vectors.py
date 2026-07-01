@@ -19,14 +19,6 @@ from decimal import Decimal
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from conftest import (
-    flat_schedule,
-    peco_rate_r,
-    seasonal_tariff,
-    tiered_tariff,
-    tou_schedule,
-    tou_tariff,
-)
 from ratebook import (
     BillingWindow,
     EnergyPeriod,
@@ -42,6 +34,15 @@ from ratebook import (
     UnsupportedKind,
     Usage,
     estimate_bill,
+)
+
+from conftest import (
+    flat_schedule,
+    peco_rate_r,
+    seasonal_tariff,
+    tiered_tariff,
+    tou_schedule,
+    tou_tariff,
 )
 
 

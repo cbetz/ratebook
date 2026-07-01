@@ -17,7 +17,6 @@ from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from conftest import tou_tariff
 from ratebook import (
     BillingWindow,
     Holiday,
@@ -29,6 +28,8 @@ from ratebook import (
     hourly_marginal_prices,
 )
 from ratebook.money import decimal_to_json
+
+from conftest import tou_tariff
 
 ALL_TWELVE = tuple(Holiday)
 

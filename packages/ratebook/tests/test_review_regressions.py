@@ -6,7 +6,6 @@ from datetime import date
 from decimal import Decimal
 
 import pytest
-from conftest import flat_schedule, tou_tariff
 from ratebook import (
     BillingWindow,
     EnergyPeriod,
@@ -24,6 +23,8 @@ from ratebook import (
 )
 from ratebook.engine import RefusalReason
 from ratebook.money import decimal_to_json
+
+from conftest import flat_schedule, tou_tariff
 
 JUNE = BillingWindow(date(2025, 6, 1), 30)
 

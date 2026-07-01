@@ -17,8 +17,9 @@ from datetime import date
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from conftest import peco_rate_r, seasonal_tariff, tiered_tariff, tou_tariff
 from ratebook import BillingWindow, cheapest_charge_window
+
+from conftest import peco_rate_r, seasonal_tariff, tiered_tariff, tou_tariff
 
 MONDAY = date(2025, 6, 2)  # a Monday → weekday TOU schedule applies
 

@@ -6,8 +6,9 @@ from datetime import date, datetime
 from decimal import Decimal
 
 import pytest
-from conftest import peco_rate_r, tou_tariff
 from ratebook import BillingWindow, cheapest_charge_window, hourly_marginal_prices
+
+from conftest import peco_rate_r, tou_tariff
 
 # tou_tariff: weekday hours 16-20 are peak (period 1 @ $0.30), everything else off-peak @ $0.10.
 MONDAY = BillingWindow(date(2025, 6, 2), 1)  # 2025-06-02 is a Monday

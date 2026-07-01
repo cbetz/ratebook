@@ -7,7 +7,6 @@ import json
 from datetime import date
 from decimal import Decimal
 
-from conftest import flat_schedule, peco_rate_r, tiered_tariff, tou_tariff
 from hypothesis import given, settings
 from hypothesis import strategies as st
 from ratebook import (
@@ -19,6 +18,8 @@ from ratebook import (
     Usage,
     estimate_bill,
 )
+
+from conftest import flat_schedule, peco_rate_r, tiered_tariff, tou_tariff
 
 JUNE = BillingWindow(date(2025, 6, 1), 30)
 

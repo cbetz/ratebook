@@ -24,7 +24,9 @@ from ratebook import (
 # A flat residential tariff: $0.10276/kWh + $11.30/month (PECO Rate R distribution).
 no_tou = tuple(tuple(0 for _ in range(24)) for _ in range(12))  # 12 months x 24 hours, one period
 tariff = Tariff(
-    energy=EnergyRateStructure(periods=(EnergyPeriod(tiers=(EnergyTier(rate=Decimal("0.10276")),)),)),
+    energy=EnergyRateStructure(
+        periods=(EnergyPeriod(tiers=(EnergyTier(rate=Decimal("0.10276")),)),)
+    ),
     schedule=Schedule(weekday=no_tou, weekend=no_tou),
     identity=TariffIdentity(
         plan_code="R", plan_name="Example flat residential", sector=Sector.RESIDENTIAL

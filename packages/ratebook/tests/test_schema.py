@@ -5,12 +5,13 @@ from __future__ import annotations
 from datetime import date
 
 import pytest
-from conftest import peco_rate_r, seasonal_tariff, tou_tariff
 from ratebook import (
     EffectiveRange,
     Tariff,
     validate_tariff,
 )
+
+from conftest import peco_rate_r, seasonal_tariff, tou_tariff
 
 
 @pytest.mark.parametrize("builder", [peco_rate_r, tou_tariff, seasonal_tariff])
